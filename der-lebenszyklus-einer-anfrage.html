@@ -1,0 +1,1815 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-springmvc-sept-2026/der-lebenszyklus-einer-anfrage.html">
+      
+      
+        <link rel="prev" href="gultigkeitsbereiche-scopes-von-daten.html">
+      
+      
+        <link rel="next" href="authentifizierung-und-autorisierung.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>7. Der Lebenszyklus einer Anfrage - Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#7-der-lebenszyklus-einer-anfrage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Der Lebenszyklus einer Anfrage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="einfuhrung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einführung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="das-action-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-template.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gultigkeitsbereiche-scopes-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche (Scopes) von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-beispiel-24-schritte-bei-der-verarbeitung-einer-anfrage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1. Beispiel 24: Schritte bei der Verarbeitung einer Anfrage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1. Beispiel 24: Schritte bei der Verarbeitung einer Anfrage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#711-der-servlet-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.1. Der Servlet-Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#712-interceptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.2. Interceptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#713-parameter-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.3. Parameter-Binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#714-exception-behandlung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.4. Exception-Behandlung
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#715-konfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.5. Konfiguration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#716-der-controller-und-die-fehlerseite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.6. Der Controller und die Fehlerseite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#717-ausfuhrung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1.7. Ausführung
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="7-der-lebenszyklus-einer-anfrage">7. <span style="color: #2e74b5">Der Lebenszyklus einer Anfrage</span></h1>
+<p>Zwischen dem Eintreffen einer Anfrage und der Ausführung der Action sind mehrere Arten von Objekten beteiligt, jedes mit einer bestimmten Rolle. Einigen davon sind wir bereits begegnet: dem Handler für statische Dateien, <strong><em>[LocaleResolver]</em></strong> (Kapitel 5), dem Filter aus Beispiel 23, den Argument-Resolvern (<strong><em>[HandlerMethodArgumentResolver]</em></strong>, Beispiel 12) und <strong><em>[@ControllerAdvice]</em></strong> (Beispiel 15). Es ist an der Zeit, sie zueinander in Beziehung zu setzen.</p>
+<p>Es gibt zwei Schichten. Die erste besteht aus dem Server (<em>[Tomcat]</em>) und dem <strong>Servlet</strong>-Standard (<em>[Java]</em>): Ein <strong>Servlet</strong> ist ein Objekt, das (HTTP-)Anfragen verarbeitet, und Servlet-<strong>Filter</strong> können es umhüllen, um davor und danach zu agieren. Die zweite Schicht ist <em>[Spring MVC]</em> selbst, das einfach <strong>ein</strong> Servlet ist, nämlich <strong><em>[DispatcherServlet]</em></strong>: Es wählt die Action aus, bindet ihre Parameter, führt sie aus und rendert dann die View. Innerhalb davon können <strong>Interceptors</strong> vor und nach der Action agieren. Während <em>[ASP.NET Core]</em> über Middleware und Filter (MVC) verfügt, <em>[Spring]</em> über Servlet-Filter und Interceptors verfügt. Die Fallstudie nutzt die meisten dieser Objekte:</p>
+<p><img src="images/10000000000003E80000018662F9C1DE.png" width="585" height="228" style="width:15.485cm;height:6.04cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000003E80000018662F9C1DE.png" /></p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Objekt</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Rolle</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>In der Fallstudie</b></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Servlet-Filter</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Bereitet die Anfrage vor; kennt die Action nicht</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><i>[Spring Security]</i>-Filter: lesen das Token; ohne Anmeldung wird der Zugriff verweigert</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Interceptor</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Code vor und nach der Action; kennt die Action</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">(nicht verwendet: Rollen werden von <i><b>[@PreAuthorize]</b></i> geprüft, siehe Kapitel 8, und <i><b>[CommonModel] </b></i>ergänzt das Modell)</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Argument-Resolver</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">liefert den Wert eines Action-Parameters</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">die von <i>[Spring MVC]</i>: Formulare, Validierung, <i><b>[BindingResult]</b></i></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><i><b>[@ExceptionHandler]</b></i></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Wandelt eine Exception in eine Antwort um</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">ungültige Session: Rückkehr zur Anmeldeseite</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><i><b>[/error]</b></i>-Fehlerseite</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Erzeugt eine Fehlerantwortseite</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><i><b>[ErrorController]</b></i>: Seiten 400, 403, 404, 500</div></td></tr></table>
+
+<h2 id="71-beispiel-24-schritte-bei-der-verarbeitung-einer-anfrage">7.1. <span style="color: #2e74b5">Beispiel 24: Schritte bei der Verarbeitung einer Anfrage</span></h2>
+<p>Beispiel 24 hat eine Funktion, die das Quadrat einer Zahl berechnet, und ein Objekt jeder Art. Jedes schreibt eine Zeile auf die Konsole: Dies zeigt die Reihenfolge, in der sie ausgeführt werden. Die aufgeführten Nummern entsprechen denen im Diagramm.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>24-lifecycle/
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── src/main/java/example24/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>│   ├── config/
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   │   └── WebConfig.java
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>│   ├── controllers/
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>│   │   ├── CalcController.java
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   │   └── ErrorPageController.java
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>│   ├── filters/
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│   │   ├── Block.java
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>│   │   ├── BlockInterceptor.java
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>│   │   ├── Timing.java
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>│   │   ├── TimingInterceptor.java
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>│   │   ├── IntegerParam.java
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>│   │   ├── IntegerParamResolver.java
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>│   │   ├── LoggerFilter.java
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>│   │   └── ErrorPageAdvice.java
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>│   └── Example24Application.java
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>├── src/main/resources/
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>│   ├── templates/
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>│   │   ├── calc/
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>│   │   │   └── result.html
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>│   │   ├── error.html
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>│   │   └── layout.html
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>│   └── application.properties
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>└── pom.xml
+</code></pre></div></td></tr></table></div>
+<p>Die Dateien <strong><em>[pom.xml]</em></strong>, <strong><em>[application.properties],</em></strong> und <strong><em>[Example24Application.java]</em></strong> stammen aus den vorherigen Beispielen.</p>
+<h3 id="711-der-servlet-filter">7.1.1. <span style="color: #1f4d78">Der Servlet-Filter</span></h3>
+<p>Die Datei <strong><em>[filters/LoggerFilter.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.filter.OncePerRequestFilter</span><span class="p">;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.FilterChain</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.ServletException</span><span class="p">;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="c1">// ein Servlet-FILTER: er sieht jede Anfrage VOR Spring MVC vorbeikommen und die</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="c1">// Antwort NACH Spring MVC. @Component: Spring Boot fügt ihn der Filterkette hinzu.</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="nd">@Component</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LoggerFilter</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">OncePerRequestFilter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doFilterInternal</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">FilterChain</span><span class="w"> </span><span class="n">next</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">requestLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getMethod</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getRequestURI</span><span class="p">()</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">"?"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">());</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"--- "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">requestLine</span><span class="p">);</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"1. filter (before)"</span><span class="p">);</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">        </span><span class="n">next</span><span class="p">.</span><span class="na">doFilter</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"> </span><span class="c1">// der ganze Rest: Spring MVC, Action, View</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"7. filter (after: code "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">getStatus</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">);</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 15–16: ein Filter wie der in Beispiel 23. <strong><em>[OncePerRequestFilter]</em></strong> ist eine Unterklasse von <em>[Spring]</em> , die die Schnittstelle <strong><em>[Filter]</em></strong> des Servlet-Standards implementiert und eine einmalige Ausführung pro Anfrage sicherstellt; wir überschreiben ihre Methode <strong><em>[doFilterInternal]</em></strong>, die bei jeder Anfrage aufgerufen wird. Mit <strong><em>[@Component]</em></strong> fügt <em>[Spring Boot]</em> den Filter der Filterkette des Servers hinzu;</li>
+<li>Zeilen 21–22: die Methode, der Pfad und die Anfrageparameter. Der Filter weiß nichts über die Action, die die Anfrage verarbeiten wird: Er greift vor <em>[Spring MVC]</em> ein, das sie noch nicht ausgewählt hat;</li>
+<li>Zeile 26: Der Filter übergibt die Anfrage an den Rest der Kette (die anderen Filter, dann <strong><em>[DispatcherServlet]</em></strong>) und <strong>wartet</strong> darauf, dass sie abgeschlossen ist. Würde er sie nicht aufrufen, würde die Anfrage dort enden (er müsste dann die Antwort selbst erzeugen). Der Code vor diesem Aufruf wird auf dem Hinweg ausgeführt, der Code danach auf dem Rückweg: Der Filter „umhüllt“ alles andere;</li>
+<li>Zeile 27: auf dem Rückweg sieht der Filter den Statuscode der Antwort.</li>
+</ul>
+<h3 id="712-interceptors">7.1.2. <span style="color: #1f4d78">Interceptors</span></h3>
+<p>Ein Interceptor wird auf alle Actions der Anwendung angewendet (siehe <strong><em>[WebConfig]</em></strong> weiter unten). Damit er nur auf bestimmte Actions wirkt, markieren wir diese mit einer eigenen <strong>Annotation</strong> , nach der der Interceptor sucht. Die Datei <strong><em>[filters/Block.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="c1">// eine Annotation, die einen Controller markiert; BlockInterceptor sucht nach ihr</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">Block</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 11: <strong><em>[@interface]</em></strong> deklariert eine Annotation. Diese Annotation hat keine Parameter: Ihr bloßes Vorhandensein genügt;</li>
+<li>Zeile 9: <strong><em>[@Target]</em></strong> legt fest, wo die Annotation angewendet werden kann: hier auf einem Typ (einer Klasse);</li>
+<li>Zeile 10: <strong><em>[@Retention(RetentionPolicy.RUNTIME)]</em></strong>: Die Annotation bleibt im kompilierten Code erhalten und ist zur Laufzeit lesbar. Ohne dies würde der Compiler sie entfernen, und der Interceptor könnte sie nicht finden.</li>
+</ul>
+<p>Die Datei <strong><em>[filters/Timing.java]</em></strong> ist bis auf den Namen identisch. Die Datei <strong><em>[filters/BlockInterceptor.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.method.HandlerMethod</span><span class="p">;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.HandlerInterceptor</span><span class="p">;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="c1">// ein INTERCEPTOR: er läuft innerhalb von Spring MVC, sobald die Action gewählt ist.</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="c1">// Dieser entscheidet, ob die Action ausgeführt werden darf.</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BlockInterceptor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">HandlerInterceptor</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">    </span><span class="c1">// preHandle: vor der Action; die Rückgabe von false beendet die Verarbeitung an dieser Stelle</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">preHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">        </span><span class="c1">// handler: was die Anfrage bearbeiten wird; bei einer Action ein HandlerMethod.</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">        </span><span class="c1">// Anders als der Filter kennt der Interceptor also die anvisierte Action.</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">handler</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">HandlerMethod</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">action</span><span class="p">.</span><span class="na">getBeanType</span><span class="p">().</span><span class="na">isAnnotationPresent</span><span class="p">(</span><span class="n">Block</span><span class="p">.</span><span class="na">class</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"2. Block interceptor (targeted action: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">action</span><span class="p">.</span><span class="na">getMethod</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">);</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"block"</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">                </span><span class="c1">// eine Fehlerantwort 403 (Zugriff verweigert) und sonst nichts</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">                </span><span class="n">response</span><span class="p">.</span><span class="na">sendError</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_FORBIDDEN</span><span class="p">);</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// weder Binding noch Action</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 11: Ein Interceptor implementiert die Schnittstelle <strong><em>[HandlerInterceptor]</em></strong> von <em>[Spring MVC]</em>. Seine drei Methoden – <strong><em>[preHandle]</em></strong>, <strong><em>[postHandle]</em></strong> und <strong><em>[afterCompletion]</em></strong> – haben eine Standardimplementierung, die nichts tut: Wir überschreiben nur diejenigen, die wir benötigen;</li>
+<li>Zeile 15: <strong><em>[preHandle]</em></strong> wird <strong>vor</strong> der Action ausgeführt, sogar noch bevor ihre Parameter gebunden werden. Sein Parameter <strong><em>[handler],</em></strong> ist das, was die Anfrage verarbeiten wird: bei einer Action ein <strong><em>[HandlerMethod]</em></strong>-Objekt, das die Methode des Controllers beschreibt;</li>
+<li>Zeile 19: Anders als der Filter weiß der Interceptor also, auf welche Action er zielt. <strong><em>[handler instanceof HandlerMethod action]</em></strong> prüft den Typ des Objekts und speichert es, falls er passt, in der Variablen <strong><em>[action]</em></strong>, die den richtigen Typ hat. <strong><em>[getBeanType()]</em></strong> gibt die Klasse des Controllers an; <strong><em>[isAnnotationPresent(Block.class)]</em></strong> zeigt an, ob er die Annotation <strong><em>[@Block]</em></strong> trägt;</li>
+<li>Zeilen 21–25: Ein Interceptor lehnt die Anfrage ab, indem er <strong><em>[false]</em></strong> zurückgibt: Der Rest des Ablaufs (Binding, Action, View) wird nicht ausgeführt. Er muss dann die Antwort selbst erzeugen: Hier erstellt <strong><em>[sendError(403)]</em></strong> eine Fehlerantwort „Zugriff verweigert“, für die der Server die Seite erzeugt (wir werden sehen, wie);</li>
+<li>Zeile 27: <strong><em>[true]</em></strong>: Die Anfrage wird fortgesetzt.</li>
+</ul>
+<p>Die Datei <strong><em>[filters/TimingInterceptor.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span>
+<span class="normal"><a href="#__codelineno-4-45">45</a></span>
+<span class="normal"><a href="#__codelineno-4-46">46</a></span>
+<span class="normal"><a href="#__codelineno-4-47">47</a></span>
+<span class="normal"><a href="#__codelineno-4-48">48</a></span>
+<span class="normal"><a href="#__codelineno-4-49">49</a></span>
+<span class="normal"><a href="#__codelineno-4-50">50</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.method.HandlerMethod</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.HandlerInterceptor</span><span class="p">;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="c1">// ein zweiter Interceptor: er misst die Dauer der Verarbeitung</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TimingInterceptor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">HandlerInterceptor</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"timing"</span><span class="p">;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">concerned</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">handler</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">HandlerMethod</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">action</span><span class="p">.</span><span class="na">getBeanType</span><span class="p">().</span><span class="na">isAnnotationPresent</span><span class="p">(</span><span class="n">Timing</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">    </span><span class="c1">// vor der Action (und vor dem Binding ihrer Parameter)</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">preHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">concerned</span><span class="p">(</span><span class="n">handler</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"3. Timing interceptor (before)"</span><span class="p">);</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">            </span><span class="c1">// die Startzeit, in einem Request-Attribut gespeichert (Request-Scope)</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">            </span><span class="n">request</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">KEY</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">());</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">    </span><span class="c1">// nach der Action, VOR der View; wird nicht aufgerufen, wenn die Action eine Exception geworfen hat</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">postHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">,</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">            </span><span class="n">ModelAndView</span><span class="w"> </span><span class="n">mav</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">concerned</span><span class="p">(</span><span class="n">handler</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"6a. Timing interceptor (after the action; chosen view: "</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">                    </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">mav</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">mav</span><span class="p">.</span><span class="na">getViewName</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">);</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a><span class="w">    </span><span class="c1">// ganz am Ende, NACH der View; wird immer aufgerufen, mit der eventuellen Exception</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">afterCompletion</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">,</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a><span class="w">            </span><span class="n">Exception</span><span class="w"> </span><span class="n">exception</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">concerned</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getAttribute</span><span class="p">(</span><span class="n">KEY</span><span class="p">)</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a><span class="w">            </span><span class="kt">long</span><span class="w"> </span><span class="n">ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">nanoTime</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1_000_000</span><span class="p">;</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">outcome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">", exception "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">exception</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getSimpleName</span><span class="p">();</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"6b. Timing interceptor (end, "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ms</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" ms"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">outcome</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">);</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 15–17: Der Interceptor interessiert sich nur für die Actions von Controllern, die mit <strong><em>[@Timing]</em></strong> annotiert sind;</li>
+<li>Zeilen 21–28: Vor der Action wird die Startzeit (<strong><em>[System.nanoTime()]</em></strong>, in Nanosekunden) erfasst und in einem Request-Attribut gespeichert (Request-Scope; siehe Kapitel 6);</li>
+<li>Zeilen 32–38: <strong><em>[postHandle]</em></strong> läuft <strong>nach</strong> der Action und <strong>vor</strong> der View. Sie erhält das von der Action erzeugte <strong><em>[ModelAndView]</em></strong> (den Namen der View und das Modell) und kann es noch ändern. Sie wird nicht aufgerufen, wenn die Action eine Exception ausgelöst hat;</li>
+<li>Zeilen 42–49: <strong><em>[afterCompletion]</em></strong> läuft ganz am Ende, <strong>nach</strong> der View, unabhängig davon, ob alles gut gegangen ist oder nicht: Dies ist der richtige Ort, um eine Ressource freizugeben oder die Ausführungszeit zu messen. Ihr letzter Parameter ist die Exception, falls vorhanden. Zeile 44: <strong><em>[instanceof Long start]</em></strong> prüft und konvertiert den Wert des Attributs in einem einzigen Schritt.</li>
+</ul>
+<h3 id="713-parameter-binding">7.1.3. <span style="color: #1f4d78">Parameter-Binding</span></h3>
+<p>Die Datei <strong><em>[filters/IntegerParam.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="c1">// ein ganzzahliger Parameter, vom IntegerParamResolver aus dem Pfad gelesen (siehe Beispiel 12)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">PARAMETER</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">IntegerParam</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Eine Annotation, diesmal auf einem Parameter (Zeile 9). Die Datei <strong><em>[filters/IntegerParamResolver.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.MethodParameter</span><span class="p">;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.support.WebDataBinderFactory</span><span class="p">;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.request.NativeWebRequest</span><span class="p">;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.request.RequestAttributes</span><span class="p">;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.method.support.HandlerMethodArgumentResolver</span><span class="p">;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.method.support.ModelAndViewContainer</span><span class="p">;</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.HandlerMapping</span><span class="p">;</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="c1">// das Binding eines Parameters @IntegerParam Integer: die gleichnamige Pfadvariable,</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="c1">// in eine ganze Zahl konvertiert, oder null, wenn sie keine ganze Zahl ist</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IntegerParamResolver</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">HandlerMethodArgumentResolver</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">supportsParameter</span><span class="p">(</span><span class="n">MethodParameter</span><span class="w"> </span><span class="n">parameter</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">parameter</span><span class="p">.</span><span class="na">hasParameterAnnotation</span><span class="p">(</span><span class="n">IntegerParam</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">parameter</span><span class="p">.</span><span class="na">getParameterType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">resolveArgument</span><span class="p">(</span><span class="n">MethodParameter</span><span class="w"> </span><span class="n">parameter</span><span class="p">,</span><span class="w"> </span><span class="n">ModelAndViewContainer</span><span class="w"> </span><span class="n">mavContainer</span><span class="p">,</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">            </span><span class="n">NativeWebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">WebDataBinderFactory</span><span class="w"> </span><span class="n">binderFactory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">        </span><span class="c1">// die Pfadvariablen ({n}...), von Spring in einem Request-Attribut gespeichert</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="w">        </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">"unchecked"</span><span class="p">)</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getAttribute</span><span class="p">(</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="w">                </span><span class="n">HandlerMapping</span><span class="p">.</span><span class="na">URI_TEMPLATE_VARIABLES_ATTRIBUTE</span><span class="p">,</span><span class="w"> </span><span class="n">RequestAttributes</span><span class="p">.</span><span class="na">SCOPE_REQUEST</span><span class="p">);</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">variables</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">parameter</span><span class="p">.</span><span class="na">getParameterName</span><span class="p">());</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"4. parameter binding (received value: \""</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"\")"</span><span class="p">);</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NumberFormatException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// die Action wird entscheiden</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Ein Argument-Resolver, wie der in Beispiel 12:</p>
+<ul>
+<li>Zeilen 18–20: Er behandelt Parameter vom Typ <strong><em>[Integer]</em></strong> mit der Annotation <strong><em>[@IntegerParam]</em></strong>;</li>
+<li>Zeilen 27–28: <em>[Spring MVC]</em> hat den Pfad (<strong><em>[/square/{n}]</em></strong>) bei der Auswahl der Action bereits analysiert; es hat die Pfadvariablen in einem Request-Attribut in Form eines Dictionarys <strong><em>[name -&gt; value]</em></strong> abgelegt;</li>
+<li>Zeile 29: der Wert der Variablen, die wie der Parameter heißt (<strong><em>[n]</em></strong>);</li>
+<li>Zeilen 31–35: der in eine ganze Zahl umgewandelte Wert oder <strong><em>[null]</em></strong> , wenn er keine ganze Zahl ist. Ein ungültiger Wert hält nichts auf: Die Action entscheidet.</li>
+</ul>
+<h3 id="714-exception-behandlung">7.1.4. <span style="color: #1f4d78">Exception-Behandlung</span></h3>
+<p>Die Datei <strong><em>[filters/ErrorPageAdvice.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.filters</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.HttpStatus</span><span class="p">;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.ControllerAdvice</span><span class="p">;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.ExceptionHandler</span><span class="p">;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="p">;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="c1">// @ControllerAdvice + @ExceptionHandler: eine von einer beliebigen Action geworfene</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="c1">// Exception in eine Antwort umwandeln (hier für die gesamte Anwendung)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="nd">@ControllerAdvice</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ErrorPageAdvice</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="c1">// nur die IllegalStateException: die anderen Exceptions nehmen ihren Lauf</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">IllegalStateException</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ModelAndView</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="n">IllegalStateException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"x. @ExceptionHandler ("</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getSimpleName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">": "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">);</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">        </span><span class="c1">// statt der Standard-Fehlerseite unsere View [error], mit dem Code 500</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">        </span><span class="n">ModelAndView</span><span class="w"> </span><span class="n">mav</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ModelAndView</span><span class="p">(</span><span class="s">"error"</span><span class="p">,</span><span class="w"> </span><span class="n">HttpStatus</span><span class="p">.</span><span class="na">INTERNAL_SERVER_ERROR</span><span class="p">);</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">        </span><span class="n">mav</span><span class="p">.</span><span class="na">addObject</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mav</span><span class="p">;</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 10: <strong><em>[@ControllerAdvice]</em></strong> macht diese Klasse zu einer Ergänzung aller Controller (siehe Beispiel 15);</li>
+<li>Zeilen 14–15: Eine <strong><em>[@ExceptionHandler]</em></strong>-Methode wird aufgerufen, wenn eine Action eine Exception des angegebenen Typs auslöst, hier <strong><em>[IllegalStateException]</em></strong> (oder eines abgeleiteten Typs). In einem Controller platziert, würde sie nur für die Actions dieses Controllers gelten; in einem <strong><em>[@ControllerAdvice]</em></strong> gilt sie für die gesamte Anwendung. Sie erhält die Exception als Parameter und erzeugt die Antwort genau wie eine Action;</li>
+<li>Zeilen 18–20: Statt der Standard-Fehlerseite die View [error] mit dem Statuscode 500. Ein <strong><em>[ModelAndView]</em></strong> fasst zusammen, was eine Action üblicherweise in zwei Teilen zurückgibt: den Namen der View und das Modell (und hier den Statuscode).</li>
+</ul>
+<p>Die anderen Exceptions werden hier nicht behandelt: Was mit ihnen geschieht, sehen wir später.</p>
+<h3 id="715-konfiguration">7.1.5. <span style="color: #1f4d78">Konfiguration</span></h3>
+<p>Die Datei <strong><em>[config/WebConfig.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span>
+<span class="normal"><a href="#__codelineno-8-22">22</a></span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span>
+<span class="normal"><a href="#__codelineno-8-24">24</a></span>
+<span class="normal"><a href="#__codelineno-8-25">25</a></span>
+<span class="normal"><a href="#__codelineno-8-26">26</a></span>
+<span class="normal"><a href="#__codelineno-8-27">27</a></span>
+<span class="normal"><a href="#__codelineno-8-28">28</a></span>
+<span class="normal"><a href="#__codelineno-8-29">29</a></span>
+<span class="normal"><a href="#__codelineno-8-30">30</a></span>
+<span class="normal"><a href="#__codelineno-8-31">31</a></span>
+<span class="normal"><a href="#__codelineno-8-32">32</a></span>
+<span class="normal"><a href="#__codelineno-8-33">33</a></span>
+<span class="normal"><a href="#__codelineno-8-34">34</a></span>
+<span class="normal"><a href="#__codelineno-8-35">35</a></span>
+<span class="normal"><a href="#__codelineno-8-36">36</a></span>
+<span class="normal"><a href="#__codelineno-8-37">37</a></span>
+<span class="normal"><a href="#__codelineno-8-38">38</a></span>
+<span class="normal"><a href="#__codelineno-8-39">39</a></span>
+<span class="normal"><a href="#__codelineno-8-40">40</a></span>
+<span class="normal"><a href="#__codelineno-8-41">41</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.config</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.method.support.HandlerMethodArgumentResolver</span><span class="p">;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.InterceptorRegistry</span><span class="p">;</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry</span><span class="p">;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurer</span><span class="p">;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example24.filters.BlockInterceptor</span><span class="p">;</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example24.filters.TimingInterceptor</span><span class="p">;</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example24.filters.IntegerParamResolver</span><span class="p">;</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="c1">// die Konfiguration von Spring MVC, ergänzt</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="nd">@Configuration</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebMvcConfigurer</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a>
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="w">    </span><span class="c1">// Bootstrap, von den Beispielen gemeinsam genutzt: der Ordner examples/common/bootstrap</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="w">    </span><span class="c1">// wird unter der URL /bootstrap/... bereitgestellt</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addResourceHandlers</span><span class="p">(</span><span class="n">ResourceHandlerRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23"></a><span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addResourceHandler</span><span class="p">(</span><span class="s">"/bootstrap/**"</span><span class="p">)</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24"></a><span class="w">                </span><span class="c1">// "file:": ein Ordner auf der Festplatte, relativ zum aktuellen Ordner. Zwei</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25"></a><span class="w">                </span><span class="c1">// Versuche: Start aus dem Ordner des Beispiels oder aus [examples]</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26"></a><span class="w">                </span><span class="p">.</span><span class="na">addResourceLocations</span><span class="p">(</span><span class="s">"file:../common/bootstrap/"</span><span class="p">,</span><span class="w"> </span><span class="s">"file:common/bootstrap/"</span><span class="p">);</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28"></a>
+<a id="__codelineno-8-29" name="__codelineno-8-29"></a><span class="w">    </span><span class="c1">// die Interceptors, in der Reihenfolge ausgeführt, in der sie hinzugefügt werden</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addInterceptors</span><span class="p">(</span><span class="n">InterceptorRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32"></a><span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">BlockInterceptor</span><span class="p">());</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33"></a><span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">TimingInterceptor</span><span class="p">());</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35"></a>
+<a id="__codelineno-8-36" name="__codelineno-8-36"></a><span class="w">    </span><span class="c1">// das Binding der Parameter @IntegerParam</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addArgumentResolvers</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">HandlerMethodArgumentResolver</span><span class="o">&gt;</span><span class="w"> </span><span class="n">resolvers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-39" name="__codelineno-8-39"></a><span class="w">        </span><span class="n">resolvers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">IntegerParamResolver</span><span class="p">());</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 30–34: Die Interceptors werden zu <em>[Spring MVC]</em> hinzugefügt, das sie in der Reihenfolge ausführt, in der sie hinzugefügt wurden (und <strong><em>[postHandle]</em></strong>, <strong><em>[afterCompletion]</em></strong> in umgekehrter Reihenfolge). Sie gelten für alle Actions; sie ließen sich auf bestimmte Pfade beschränken (<strong><em>[.addPathPatterns(&quot;/square/**&quot;)]</em></strong>), aber unsere Annotationen sind präziser;</li>
+<li>Zeilen 37–40: der Argument-Resolver, wie in Beispiel 12.</li>
+</ul>
+<h3 id="716-der-controller-und-die-fehlerseite">7.1.6. <span style="color: #1f4d78">Der Controller und die Fehlerseite</span></h3>
+<p>Die Datei <strong><em>[controllers/CalcController.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.controllers</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.HttpStatus</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.ui.Model</span><span class="p">;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.server.ResponseStatusException</span><span class="p">;</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example24.filters.Block</span><span class="p">;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example24.filters.Timing</span><span class="p">;</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example24.filters.IntegerParam</span><span class="p">;</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="c1">// zwei am Controller gesetzte Annotationen: die Interceptors suchen nach ihnen</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="nd">@Block</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="nd">@Timing</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="nd">@Controller</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CalcController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">"/square/{n}"</span><span class="p">)</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="nd">@IntegerParam</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"5. action square("</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">);</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="w">            </span><span class="c1">// ein Fehler 400: siehe ErrorPageController</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResponseStatusException</span><span class="p">(</span><span class="n">HttpStatus</span><span class="p">.</span><span class="na">BAD_REQUEST</span><span class="p">);</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">"13 brings bad luck"</span><span class="p">);</span><span class="w"> </span><span class="c1">// ein "unerwarteter" Fehler</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">"n"</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">"square"</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"calc/result"</span><span class="p">;</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 14–15: die beiden Annotationen, nach denen die Interceptors suchen;</li>
+<li>Zeile 20: der Parameter <strong><em>[n]</em></strong>, bereitgestellt von unserem Resolver;</li>
+<li>Zeilen 22–25: ein ungültiger Parameter: ein Fehler 400 (ungültige Anfrage). Die <strong><em>[ResponseStatusException]</em></strong> (siehe Beispiel 21) wird von <em>[Spring MVC]</em> in eine Fehlerantwort ohne Inhalt umgewandelt;</li>
+<li>Zeilen 26–28: ein „unerwarteter“ Fehler, um <strong><em>[@ExceptionHandler]</em></strong> in Aktion zu sehen;</li>
+<li>Zeilen 29–31: der Normalfall. Die Datei <strong><em>[templates/calc/result.html]</em></strong> zeigt das Ergebnis an:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="cp">&lt;!doctype html&gt;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">"http://www.thymeleaf.org"</span> <span class="na">th:replace</span><span class="o">=</span><span class="s">"~{layout :: page(~{::main})}"</span><span class="p">&gt;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>  <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h4"</span> <span class="na">th:text</span><span class="o">=</span><span class="s">"|${n} squared = ${square}|"</span><span class="p">&gt;</span>7 squared = 49<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 2: Die Seite verwendet das Template <strong><em>[templates/layout.html]</em></strong> wie erwartet (siehe Beispiel 15): einen Titel und <em>[Bootstrap]</em>;</li>
+<li>Zeile 5: Zwischen zwei senkrechten Strichen ist <strong><em>[|...|]</em></strong> eine Zeichenkette, in der <em>[Thymeleaf]</em> jedes Vorkommen von <strong><em>[${...}]</em></strong> durch seinen Wert ersetzt.</li>
+</ul>
+<p>Bleibt die Fehlerseite. Wenn eine Anfrage in einer <strong>Fehlerantwort</strong> (einem Aufruf von <strong><em>[sendError]</em></strong>, einer <strong><em>[ResponseStatusException]</em></strong>, einer unbekannten Adresse oder einer unbehandelten Exception) endet, gibt der Server keine leere Antwort zurück: Er <strong>leitet</strong> die Anfrage an die Adresse <strong><em>[/error]</em></strong> weiter, um die zurückzugebende Seite zu erzeugen, und speichert dabei den Fehlercode in einem Request-Attribut. <em>[Spring Boot]</em> stellt für diese Adresse bereits eine Action bereit: Sie hat bisher die JSON-Fehlerantworten (für <em>[curl]</em>) und die „Whitelabel Error Page“ (für einen Browser) erzeugt. Die Datei <strong><em>[controllers/ErrorPageController.java]</em></strong> ersetzt sie:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span>
+<span class="normal"><a href="#__codelineno-11-25">25</a></span>
+<span class="normal"><a href="#__codelineno-11-26">26</a></span>
+<span class="normal"><a href="#__codelineno-11-27">27</a></span>
+<span class="normal"><a href="#__codelineno-11-28">28</a></span>
+<span class="normal"><a href="#__codelineno-11-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example24.controllers</span><span class="p">;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.webmvc.error.ErrorController</span><span class="p">;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.ui.Model</span><span class="p">;</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="p">;</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.RequestDispatcher</span><span class="p">;</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="c1">// die Fehlerseite der Anwendung. Eine Fehlerantwort (sendError, unbehandelte</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="c1">// Exception) wird vom Server an die Adresse /error weitergeleitet; die Implementierung</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="c1">// von ErrorController ersetzt die Fehlerseite von Spring Boot durch unsere.</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="nd">@Controller</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ErrorPageController</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">ErrorController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">    </span><span class="c1">// @RequestMapping ohne HTTP-Methode: alle Methoden (GET, POST ...)</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/error"</span><span class="p">)</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="w">        </span><span class="c1">// der ursprüngliche Fehlercode, vom Server in einem Request-Attribut gespeichert</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a><span class="w">        </span><span class="n">Object</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getAttribute</span><span class="p">(</span><span class="n">RequestDispatcher</span><span class="p">.</span><span class="na">ERROR_STATUS_CODE</span><span class="p">);</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"8. error page "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" (request forwarded to /error)"</span><span class="p">);</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25"></a><span class="w">        </span><span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"> </span><span class="c1">// die Seite behält den Fehlercode</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"error"</span><span class="p">;</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 15–16: ein Controller, der die Schnittstelle <strong><em>[ErrorController]</em></strong> von <em>[Spring Boot]</em> implementiert. Diese Schnittstelle hat keine Methoden; sie dient als Markierung. Sobald ein Bean sie implementiert, entfernt <em>[Spring Boot]</em> seinen eigenen Fehler-Handler;</li>
+<li>Zeile 19: <strong><em>[@RequestMapping]</em></strong>, das keine Methoden (HTTP) angibt, akzeptiert alle Methoden: Eine an <strong><em>[/error]</em></strong> weitergeleitete POST-Anfrage bleibt eine POST-Anfrage;</li>
+<li>Zeilen 22–23: der ursprüngliche Fehlercode, vom Server im Attribut <strong><em>[RequestDispatcher.ERROR_STATUS_CODE]</em></strong> gespeichert. <strong><em>[code instanceof Integer c ? c : 500]</em></strong>: Wenn das Attribut eine ganze Zahl ist, deren Wert; andernfalls 500 (zum Beispiel, wenn <strong><em>[/error]</em></strong> direkt aufgerufen wird);</li>
+<li>Zeilen 25–27: Die Seite behält den Fehlercode bei und übergibt ihn an die View.</li>
+</ul>
+<p>Die Datei <strong><em>[templates/error.html]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span>
+<span class="normal"><a href="#__codelineno-12-16">16</a></span>
+<span class="normal"><a href="#__codelineno-12-17">17</a></span>
+<span class="normal"><a href="#__codelineno-12-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="cp">&lt;!doctype html&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="cm">&lt;!--/* die Fehlerseite; ihr Modell: der Fehlercode */--&gt;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">"http://www.thymeleaf.org"</span> <span class="na">th:replace</span><span class="o">=</span><span class="s">"~{layout :: page(~{::main})}"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="p">&lt;</span><span class="nt">main</span><span class="p">&gt;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-danger"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>    <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h4"</span> <span class="na">th:text</span><span class="o">=</span><span class="s">"|Error ${code}|"</span><span class="p">&gt;</span>Error 500<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a>    <span class="cm">&lt;!--/* th:switch / th:case: der erste Fall, der dem Wert entspricht; *: alle anderen */--&gt;</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-0"</span> <span class="na">th:switch</span><span class="o">=</span><span class="s">"${code}"</span><span class="p">&gt;</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">th:case</span><span class="o">=</span><span class="s">"400"</span><span class="p">&gt;</span>Bad request.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">th:case</span><span class="o">=</span><span class="s">"403"</span><span class="p">&gt;</span>Access denied.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a>      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">th:case</span><span class="o">=</span><span class="s">"404"</span><span class="p">&gt;</span>Page not found.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a>      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">th:case</span><span class="o">=</span><span class="s">"*"</span><span class="p">&gt;</span>Internal server error.<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a>    <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16"></a><span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 9–14: <strong><em>[th:switch]</em></strong> und <strong><em>[th:case]</em></strong>: Nur das erste Tag, <strong><em>[th:case]</em></strong>, dessen Wert gleich dem von <strong><em>[th:switch]</em></strong> ist, wird beibehalten; <strong><em>[*]</em></strong> entspricht allem anderen. Die View wird sowohl für <strong><em>[ErrorPageController] als auch [ErrorPageAdvice]</em></strong> verwendet.</li>
+</ul>
+<h3 id="717-ausfuhrung">7.1.7. <span style="color: #1f4d78">Ausführung</span></h3>
+<p>Fünf Anfragen: eine normale Berechnung (<a href="http://localhost:5000/carre/7"><u><span style="color: #0563c1">http://localhost:5000/square/7</span></u></a>), ein ungültiger Parameter (<strong><em>[/square/abc]</em></strong>), eine vom Interceptor blockierte Anfrage (<strong><em>[/square/7?block=1]</em></strong>), ein unerwarteter Fehler (<strong><em>[/square/13]</em></strong>) und eine unbekannte Adresse (<strong><em>[/unknown]</em></strong>). Die Serverkonsole:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-13-10">10</a></span>
+<span class="normal"><a href="#__codelineno-13-11">11</a></span>
+<span class="normal"><a href="#__codelineno-13-12">12</a></span>
+<span class="normal"><a href="#__codelineno-13-13">13</a></span>
+<span class="normal"><a href="#__codelineno-13-14">14</a></span>
+<span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span>
+<span class="normal"><a href="#__codelineno-13-18">18</a></span>
+<span class="normal"><a href="#__codelineno-13-19">19</a></span>
+<span class="normal"><a href="#__codelineno-13-20">20</a></span>
+<span class="normal"><a href="#__codelineno-13-21">21</a></span>
+<span class="normal"><a href="#__codelineno-13-22">22</a></span>
+<span class="normal"><a href="#__codelineno-13-23">23</a></span>
+<span class="normal"><a href="#__codelineno-13-24">24</a></span>
+<span class="normal"><a href="#__codelineno-13-25">25</a></span>
+<span class="normal"><a href="#__codelineno-13-26">26</a></span>
+<span class="normal"><a href="#__codelineno-13-27">27</a></span>
+<span class="normal"><a href="#__codelineno-13-28">28</a></span>
+<span class="normal"><a href="#__codelineno-13-29">29</a></span>
+<span class="normal"><a href="#__codelineno-13-30">30</a></span>
+<span class="normal"><a href="#__codelineno-13-31">31</a></span>
+<span class="normal"><a href="#__codelineno-13-32">32</a></span>
+<span class="normal"><a href="#__codelineno-13-33">33</a></span>
+<span class="normal"><a href="#__codelineno-13-34">34</a></span>
+<span class="normal"><a href="#__codelineno-13-35">35</a></span>
+<span class="normal"><a href="#__codelineno-13-36">36</a></span>
+<span class="normal"><a href="#__codelineno-13-37">37</a></span>
+<span class="normal"><a href="#__codelineno-13-38">38</a></span>
+<span class="normal"><a href="#__codelineno-13-39">39</a></span>
+<span class="normal"><a href="#__codelineno-13-40">40</a></span>
+<span class="normal"><a href="#__codelineno-13-41">41</a></span>
+<span class="normal"><a href="#__codelineno-13-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>--- GET /square/7
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>1. filter (before)
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>2. Block interceptor (targeted action: square)
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>3. Timing interceptor (before)
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>4. parameter binding (received value: "7")
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a>5. action square(7)
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a>6a. Timing interceptor (after the action; chosen view: calc/result)
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a>6b. Timing interceptor (end, 5 ms)
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a>7. filter (after: code 200)
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11"></a>--- GET /square/abc
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a>1. filter (before)
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a>2. Block interceptor (targeted action: square)
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a>3. Timing interceptor (before)
+<a id="__codelineno-13-15" name="__codelineno-13-15"></a>4. parameter binding (received value: "abc")
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a>5. action square(null)
+<a id="__codelineno-13-17" name="__codelineno-13-17"></a>2026-09-25T18:48:16.146+02:00  WARN 23271 --- [nio-5000-exec-3] .w.s.m.a.ResponseStatusExceptionResolver : Resolved [org.springframework.web.server.ResponseStatusException: 400 BAD_REQUEST]
+<a id="__codelineno-13-18" name="__codelineno-13-18"></a>6b. Timing interceptor (end, 1 ms)
+<a id="__codelineno-13-19" name="__codelineno-13-19"></a>7. filter (after: code 400)
+<a id="__codelineno-13-20" name="__codelineno-13-20"></a>8. error page 400 (request forwarded to /error)
+<a id="__codelineno-13-21" name="__codelineno-13-21"></a>
+<a id="__codelineno-13-22" name="__codelineno-13-22"></a>--- GET /square/7?block=1
+<a id="__codelineno-13-23" name="__codelineno-13-23"></a>1. filter (before)
+<a id="__codelineno-13-24" name="__codelineno-13-24"></a>2. Block interceptor (targeted action: square)
+<a id="__codelineno-13-25" name="__codelineno-13-25"></a>7. filter (after: code 403)
+<a id="__codelineno-13-26" name="__codelineno-13-26"></a>8. error page 403 (request forwarded to /error)
+<a id="__codelineno-13-27" name="__codelineno-13-27"></a>
+<a id="__codelineno-13-28" name="__codelineno-13-28"></a>--- GET /square/13
+<a id="__codelineno-13-29" name="__codelineno-13-29"></a>1. filter (before)
+<a id="__codelineno-13-30" name="__codelineno-13-30"></a>2. Block interceptor (targeted action: square)
+<a id="__codelineno-13-31" name="__codelineno-13-31"></a>3. Timing interceptor (before)
+<a id="__codelineno-13-32" name="__codelineno-13-32"></a>4. parameter binding (received value: "13")
+<a id="__codelineno-13-33" name="__codelineno-13-33"></a>5. action square(13)
+<a id="__codelineno-13-34" name="__codelineno-13-34"></a>x. @ExceptionHandler (IllegalStateException: 13 brings bad luck)
+<a id="__codelineno-13-35" name="__codelineno-13-35"></a>2026-09-25T18:48:16.174+02:00  WARN 23271 --- [nio-5000-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.IllegalStateException: 13 brings bad luck]
+<a id="__codelineno-13-36" name="__codelineno-13-36"></a>6b. Timing interceptor (end, 5 ms)
+<a id="__codelineno-13-37" name="__codelineno-13-37"></a>7. filter (after: code 500)
+<a id="__codelineno-13-38" name="__codelineno-13-38"></a>
+<a id="__codelineno-13-39" name="__codelineno-13-39"></a>--- GET /unknown
+<a id="__codelineno-13-40" name="__codelineno-13-40"></a>1. filter (before)
+<a id="__codelineno-13-41" name="__codelineno-13-41"></a>7. filter (after: code 404)
+<a id="__codelineno-13-42" name="__codelineno-13-42"></a>8. error page 404 (request forwarded to /error)
+</code></pre></div></td></tr></table></div>
+<p>Dieses Protokoll zeigt:</p>
+<ul>
+<li>die Reihenfolge der Schritte im Normalfall: der Filter, die Interceptors (<strong><em>[preHandle]</em></strong>) in der Reihenfolge ihres Hinzufügens, das Parameter-Binding, die Action, <strong><em>[postHandle]</em></strong> (die View ist noch nicht gerendert), <strong><em>[afterCompletion]</em></strong> (die View ist gerendert) und dann erneut der Filter, der den endgültigen Antwortcode sieht;</li>
+<li>der Interceptor, der die Anfrage ablehnt (<strong><em>[/square/7?block=1]</em></strong>), umgeht alles andere in <em>[Spring MVC]</em>: kein zweiter Interceptor, kein Binding, keine Action;</li>
+<li>Ein ungültiger Parameter verhindert die Ausführung der Action nicht: Die Action selbst entscheidet (<strong><em>[square(null)]</em></strong>), hier durch Auslösen einer <strong><em>[ResponseStatusException]</em></strong>. <em>[Spring MVC]</em> übergibt jede von einer Action ausgelöste Exception an eine Reihe von <strong>Exception-Handlern</strong> (<strong><em>[HandlerExceptionResolver]</em></strong>); derjenige der <strong><em>[ResponseStatusException]</em></strong> wandelt sie in eine Fehlerantwort 400 um und protokolliert sie (Zeile <strong><em>[WARN ... Resolved]</em></strong>). Da die Action eine Exception ausgelöst hat, wird <strong><em>[postHandle]</em></strong> nicht aufgerufen; <strong><em>[afterCompletion]</em></strong> wird ohne Exception aufgerufen: Die Exception wurde bereits behandelt;</li>
+<li>die Exception von <strong><em>[/square/13]</em></strong> wird auf dieselbe Weise vom Resolver behandelt, der nach den <strong><em>[@ExceptionHandler]</em></strong>-Methoden sucht (Schritt x). Diese Methode erzeugt eine vollständige Seite mit dem Statuscode 500: Die Anfrage endet dort, ohne über <strong><em>[/error]</em></strong> zu laufen;</li>
+<li>eine Fehlerantwort ohne Inhalt (400, 403, 404) wird in eine Seite umgewandelt, indem sie an <strong><em>[/error]</em></strong> weitergegeben wird (Schritt 8). Beachten Sie, dass dieser Schritt <strong>nach</strong> der Rückkehr der Anfrage zum Filter erfolgt (Schritt 7): <strong><em>[sendError]</em></strong> markiert die Antwort lediglich als Fehler, und es ist der Server (<em>[Tomcat]</em>), der die Anfrage nach Abschluss der Filterkette an <strong><em>[/error]</em></strong> weiterleitet. Dieser zweite Durchlauf geht nicht durch unseren Filter: <em>[Spring Boot]</em> registriert den Filter zwar für Anfragen, die an <strong><em>[/error]</em></strong> weitergeleitet werden, aber <strong><em>[OncePerRequestFilter]</em></strong> lässt sie passieren, ohne ihn auszuführen (dies ist sein Standardverhalten, das sich durch Überschreiben seiner Methode <strong><em>[shouldNotFilterErrorDispatch]</em></strong> ändern ließe). Er durchläuft jedoch die Interceptors, da es <em>[Spring MVC]</em> ist, das die Action <strong><em>[/error]</em></strong> ausführt; aber <strong><em>[ErrorPageController]</em></strong> trägt deren Annotationen nicht, und sie schreiben nichts;</li>
+<li>Bei einer unbekannten Adresse passt keine Action: <em>[Spring MVC]</em> übergibt die Anfrage dann an den Handler für statische Dateien (einen <strong><em>[ResourceHttpRequestHandler]</em></strong>), der keine Datei findet und eine <strong><em>[NoResourceFoundException]</em></strong>-Exception auslöst, die von einem Exception-Resolver in eine Fehlerantwort 404 umgewandelt wird (diesmal ohne <strong><em>[WARN]</em></strong>-Zeile im Protokoll). Die Interceptors wurden zwar aufgerufen, aber der <strong><em>[handler]</em></strong>, den sie erhielten, ist keine Action (<strong><em>[HandlerMethod]</em></strong>): Sie haben nichts geschrieben.</li>
+</ul>
+<p>Die resultierenden Seiten:</p>
+<p><img src="images/10000000000002BE0000006C735FA790.png" width="428" height="66" style="width:11.322cm;height:1.743cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000006C735FA790.png" /></p>
+<p><img src="images/10000000000002BE000000B617A22D7E.png" width="428" height="111" style="width:11.322cm;height:2.935cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000B617A22D7E.png" /></p>
+<p><img src="images/10000000000002BE000000B6F51F9481.png" width="428" height="111" style="width:11.322cm;height:2.935cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000B6F51F9481.png" /></p>
+<p><img src="images/10000000000002BE000000B60226A105.png" width="428" height="111" style="width:11.322cm;height:2.935cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000B60226A105.png" /></p>
+<p>Prüfen wir, ob der Fehlercode erhalten bleibt:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>curl -i "http://localhost:5000/square/7?block=1"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span>
+<span class="normal"><a href="#__codelineno-15-19">19</a></span>
+<span class="normal"><a href="#__codelineno-15-20">20</a></span>
+<span class="normal"><a href="#__codelineno-15-21">21</a></span>
+<span class="normal"><a href="#__codelineno-15-22">22</a></span>
+<span class="normal"><a href="#__codelineno-15-23">23</a></span>
+<span class="normal"><a href="#__codelineno-15-24">24</a></span>
+<span class="normal"><a href="#__codelineno-15-25">25</a></span>
+<span class="normal"><a href="#__codelineno-15-26">26</a></span>
+<span class="normal"><a href="#__codelineno-15-27">27</a></span>
+<span class="normal"><a href="#__codelineno-15-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>HTTP/1.1 403
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>Content-Type: text/html;charset=UTF-8
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a>&lt;!doctype html&gt;
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>&lt;html lang="en"&gt;
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a>&lt;head&gt;
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a>  &lt;meta charset="utf-8"&gt;
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a>  &lt;title&gt;Lifecycle&lt;/title&gt;
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a>  &lt;link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"&gt;
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a>&lt;/head&gt;
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a>&lt;body&gt;
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a>  &lt;div class="container py-3"&gt;
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a>    &lt;main&gt;
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a>  &lt;div class="alert alert-danger"&gt;
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a>    &lt;h1 class="h4"&gt;Error 403&lt;/h1&gt;
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a>    &lt;p class="mb-0"&gt;
+<a id="__codelineno-15-19" name="__codelineno-15-19"></a>
+<a id="__codelineno-15-20" name="__codelineno-15-20"></a>      &lt;span&gt;Access denied.&lt;/span&gt;
+<a id="__codelineno-15-21" name="__codelineno-15-21"></a>
+<a id="__codelineno-15-22" name="__codelineno-15-22"></a>
+<a id="__codelineno-15-23" name="__codelineno-15-23"></a>    &lt;/p&gt;
+<a id="__codelineno-15-24" name="__codelineno-15-24"></a>  &lt;/div&gt;
+<a id="__codelineno-15-25" name="__codelineno-15-25"></a>&lt;/main&gt;
+<a id="__codelineno-15-26" name="__codelineno-15-26"></a>  &lt;/div&gt;
+<a id="__codelineno-15-27" name="__codelineno-15-27"></a>&lt;/body&gt;
+<a id="__codelineno-15-28" name="__codelineno-15-28"></a>&lt;/html&gt;
+</code></pre></div></td></tr></table></div>
+<p>Nur das <strong><em>[span]</em></strong> des von <strong><em>[th:switch]</em></strong> ausgewählten Falls erscheint auf der Seite.</p>
+<p>Die Fallstudie kombiniert diese Mechanismen: einen <strong><em>[ErrorController]</em></strong>-Handler für die Seiten 400, 403, 404 und 500, an den der Server alle Fehlerantworten weiterleitet, einschließlich der Exceptions, die niemand behandelt hat (die Seite 500, ohne den Call Stack); und einen <strong><em>[@ExceptionHandler]</em></strong> (<strong><em>[web/HtmlExceptionHandler.java]</em></strong>) für einen Sonderfall: Eine ungültige Session (das Konto wurde nach der Anmeldung gelöscht) zeigt keine Fehlerseite an, sondern leitet zur Anmeldeseite um.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

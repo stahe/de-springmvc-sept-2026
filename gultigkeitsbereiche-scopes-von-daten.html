@@ -1,0 +1,1442 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-springmvc-sept-2026/gultigkeitsbereiche-scopes-von-daten.html">
+      
+      
+        <link rel="prev" href="internationalisierung.html">
+      
+      
+        <link rel="next" href="der-lebenszyklus-einer-anfrage.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>6. Gültigkeitsbereiche (Scopes) von Daten - Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-gultigkeitsbereiche-scopes-von-daten" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Gültigkeitsbereiche (Scopes) von Daten
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="einfuhrung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einführung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="das-action-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-template.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche (Scopes) von Daten
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="gultigkeitsbereiche-scopes-von-daten.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche (Scopes) von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-beispiel-23-drei-scopes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1. Beispiel 23: Drei Scopes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1. Beispiel 23: Drei Scopes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-die-drei-beans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.1. Die drei Beans
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#612-daten-mit-request-scope-die-request-attribute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.2. Daten mit Request-Scope: die Request-Attribute
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#613-der-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.3. Der Controller
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#614-die-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.4. Die View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#615-ausfuhrung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.5. Ausführung
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="6-gultigkeitsbereiche-scopes-von-daten">6. <span style="color: #2e74b5">Gültigkeitsbereiche (Scopes) von Daten</span></h1>
+<p>Eine Webanwendung bedient viele Benutzer gleichzeitig, und jeder von ihnen sendet zahlreiche Anfragen. Daten können daher auf drei Ebenen geteilt werden, die man als <strong>Scope</strong> (Gültigkeitsbereich) bezeichnet:</p>
+<ul>
+<li><strong>Application</strong>-Scope: Die Daten werden von allen Benutzern während der gesamten Lebensdauer des Servers geteilt (zum Beispiel die Liste der Ärzte);</li>
+<li><strong>Request</strong>-Scope: Die Daten existieren nur für die Dauer einer Anfrage (das Modell einer View);</li>
+<li><strong>Client</strong>-Scope: Die Daten gehören einem bestimmten Benutzer und müssen von einer Anfrage zur nächsten erhalten bleiben (die gewählte Sprache, der angemeldete Benutzer).</li>
+</ul>
+<p>Für diesen letzten Scope werden in Webanwendungen seit langem <strong>Sessions</strong> verwendet: ein vom Server verwalteter, für jeden Browser eigener Speicherbereich, der über ein Identifikations-Cookie wiedergefunden wird (<strong><em>[JSESSIONID]</em></strong> in <em>[Java]</em>). <em>[Spring MVC]</em> verwendet sie standardmäßig weiterhin für Flash-Attribute (Beispiel 20). Die Fallstudie nutzt sie jedoch nicht, ebenso wenig wie die Beispiele in diesem Dokument (mit Ausnahme der Flash-Attribute in einigen Beispielen, etwa den Beispielen 20 und 21): Die clientseitigen Daten werden vom Browser in Cookies gespeichert. Der Server speichert zwischen zwei Anfragen desselben Benutzers nichts: Man sagt, er sei <strong>zustandslos</strong> (<em>[stateless]</em>). Das ermöglicht es zum Beispiel, mehrere identische Server hinter einem Load Balancer zu betreiben. Der Preis dafür: Ein Cookie unterliegt der Kontrolle des Benutzers, der es lesen und ändern kann. Daher werden dort nur nicht sensible Daten gespeichert – oder Daten, die vom Server <strong>signiert</strong> oder <strong>verschlüsselt</strong> wurden und bei denen er Änderungen daher erkennen kann: So verhält es sich beim Authentifizierungs-Token (Kapitel 8).</p>
+<p>Auf der Serverseite entsprechen der Application- und der Request-Scope den <strong>Scopes</strong> der Beans in <em>[Spring]</em> (siehe Beispiel 06). Ein Bean wird von <em>[Spring]</em> erstellt und verwaltet; sein Scope legt fest, wie viele Instanzen erzeugt werden und für wie lange. Drei davon sind für uns von Interesse:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Annotation</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Scope</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Eine Instanz ...</b></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">(keine)</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">singleton</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">für die gesamte Lebensdauer der Anwendung, geteilt von allen Anfragen. Dies ist der Standard-Scope</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><i><b>[@RequestScope]</b></i></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">request</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">pro HTTP-Anfrage, geteilt von allen, die es während dieser Anfrage anfordern</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><i><b>[@Scope(&quot;prototype&quot;)]</b></i></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">prototype</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Jedes Mal, wenn das Bean bei <i>[Spring]</i> angefordert wird: zwei Anforderungen, zwei Instanzen</div></td></tr></table>
+
+<p>Dies sind die Lebensdauern <strong><em>[Singleton]</em></strong>, <strong><em>[Scoped],</em></strong> und <strong><em>[Transient]</em></strong> von <em>[ASP.NET Core]</em>. Es gibt außerdem einen Session-Scope (<strong><em>[@SessionScope]</em></strong>), den wir nicht verwenden werden.</p>
+<h2 id="61-beispiel-23-drei-scopes">6.1. <span style="color: #2e74b5">Beispiel 23: Drei Scopes</span></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>23-scopes/
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── src/main/java/example23/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>│   ├── config/
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   │   ├── StartFilter.java
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>│   │   └── WebConfig.java
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>│   ├── controllers/
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   │   └── ScopesController.java
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>│   ├── services/
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│   │   ├── CounterService.java
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>│   │   ├── ToolService.java
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>│   │   └── RequestService.java
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>│   └── Example23Application.java
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>├── src/main/resources/
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>│   ├── templates/scopes/
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>│   │   └── scopes.html
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>│   └── application.properties
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>└── pom.xml
+</code></pre></div></td></tr></table></div>
+<p>Die Dateien <strong><em>[pom.xml]</em></strong>, <strong><em>[application.properties]</em></strong>, <strong><em>[Example23Application.java],</em></strong> und <strong><em>[WebConfig.java]</em></strong> (die lediglich die Dateien von <em>[Bootstrap]</em> bereitstellt) stammen aus den vorherigen Beispielen.</p>
+<h3 id="611-die-drei-beans">6.1.1. <span style="color: #1f4d78">Die drei Beans</span></h3>
+<p>Die Datei <strong><em>[services/CounterService.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example23.services</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.atomic.AtomicInteger</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1">// Scope APPLICATION (Singleton, der Standard-Scope von Beans): eine einzige</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1">// Instanz, von ALLEN Anfragen ALLER Benutzer gemeinsam genutzt</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nd">@Service</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CounterService</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="c1">// mehrere Anfragen können GLEICHZEITIG laufen: AtomicInteger</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="c1">// garantiert, dass zwei gleichzeitige Inkrementierungen nicht verloren gehen</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 9: ein Bean ohne weitere Angabe: Es ist ein Singleton. Sein Feld <strong><em>[total]</em></strong> hat daher den Application-Scope;</li>
+<li>Zeilen 14–18: Ein Webserver verarbeitet mehrere Anfragen <strong>gleichzeitig</strong> in mehreren Threads (<em>[threads]</em>). Führen zwei Anfragen <strong><em>[total++]</em></strong> gleichzeitig aus, können beide denselben Wert lesen, und ein Inkrement geht verloren. Ein <strong><em>[AtomicInteger]</em></strong> ist eine ganze Zahl, die die Methode <strong><em>[incrementAndGet]</em></strong> in einer einzigen, unteilbaren Operation liest, erhöht und zurückschreibt. Ein Singleton-Bean muss sich stets vor solchen nebenläufigen Zugriffen in Acht nehmen.</li>
+</ul>
+<p>Die Datei <strong><em>[services/RequestService.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example23.services</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.atomic.AtomicInteger</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.annotation.RequestScope</span><span class="p">;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="c1">// Scope REQUEST (@RequestScope): eine NEUE Instanz für jede HTTP-Anfrage,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="c1">// von allen gemeinsam genutzt, die sie WÄHREND dieser Anfrage anfordern</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="nd">@Service</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="nd">@RequestScope</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RequestService</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="c1">// static: ein Zähler, den alle Instanzen gemeinsam nutzen</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">CREATED_INSTANCES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CREATED_INSTANCES</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getNumber</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">number</span><span class="p">;</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 11: Die Annotation <strong><em>[@RequestScope]</em></strong> gibt dem Bean den Scope „request“;</li>
+<li>Zeile 15: ein [static]-Feld gehört zur Klasse, nicht zu einer Instanz; es wird von allen Instanzen geteilt. Es zählt die Anzahl der erzeugten Instanzen;</li>
+<li>Zeile 17: Jeder Instanz wird bei ihrer Erzeugung eine Nummer zugewiesen. Da das Bean den Request-Scope hat, ändert sich die Nummer bei jeder Anfrage.</li>
+</ul>
+<p>Die Datei <strong><em>[services/ToolService.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example23.services</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.concurrent.atomic.AtomicInteger</span><span class="p">;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Scope</span><span class="p">;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="c1">// Scope PROTOTYPE: eine NEUE Instanz, JEDES Mal wenn die Bean bei Spring angefordert wird</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="nd">@Service</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="nd">@Scope</span><span class="p">(</span><span class="s">"prototype"</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ToolService</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="w"> </span><span class="n">CREATED_INSTANCES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AtomicInteger</span><span class="p">();</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CREATED_INSTANCES</span><span class="p">.</span><span class="na">incrementAndGet</span><span class="p">();</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getNumber</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">number</span><span class="p">;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Derselbe Instanzzähler für ein Bean mit dem Scope <strong><em>[prototype]</em></strong> (Zeile 10).</p>
+<h3 id="612-daten-mit-request-scope-die-request-attribute">6.1.2. <span style="color: #1f4d78">Daten mit Request-Scope: die Request-Attribute</span></h3>
+<p>Die Datei <strong><em>[config/StartFilter.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example23.config</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalTime</span><span class="p">;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.format.DateTimeFormatter</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.filter.OncePerRequestFilter</span><span class="p">;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.FilterChain</span><span class="p">;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.ServletException</span><span class="p">;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletRequest</span><span class="p">;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="c1">// ein Filter (siehe Kapitel 7): für jede Anfrage ausgeführt, VOR Spring MVC.</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="c1">// Scope REQUEST: die Attribute der Anfrage entstehen und vergehen mit ihr.</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="nd">@Component</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StartFilter</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">OncePerRequestFilter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doFilterInternal</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">FilterChain</span><span class="w"> </span><span class="n">next</span><span class="p">)</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">"start"</span><span class="p">,</span><span class="w"> </span><span class="n">LocalTime</span><span class="p">.</span><span class="na">now</span><span class="p">().</span><span class="na">format</span><span class="p">(</span><span class="n">DateTimeFormatter</span><span class="p">.</span><span class="na">ofPattern</span><span class="p">(</span><span class="s">"HH:mm:ss.SSS"</span><span class="p">)));</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">        </span><span class="n">next</span><span class="p">.</span><span class="na">doFilter</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"> </span><span class="c1">// wir übergeben an den Rest</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 17–18: ein Servlet-<strong>Filter</strong> (das nächste Kapitel beschreibt sie im Detail). Er verarbeitet jede Anfrage vor <em>[Spring MVC]</em>. Die Klasse <strong><em>[OncePerRequestFilter]</em></strong> von <em>[Spring]</em> stellt sicher, dass er nur einmal pro Anfrage ausgeführt wird; die Annotation <strong><em>[@Component]</em></strong> genügt, damit <em>[Spring Boot]</em> ihn der Filterkette hinzufügt;</li>
+<li>Zeile 23: Der Filter speichert den Empfangszeitpunkt der Anfrage in einem <strong>Request-Attribut</strong>. Das Objekt <strong><em>[HttpServletRequest]</em></strong> enthält ein Dictionary von Attributen, das mit der Anfrage erstellt und zerstört wird: Alles, was sie verarbeitet (Filter, Controller, View), kann darin lesen und schreiben. Dies entspricht <strong><em>[HttpContext.Items]</em></strong> in <em>[ASP.NET Core]</em>;</li>
+<li>Zeile 24: Der Filter gibt die Kontrolle an den nächsten Schritt weiter: die anderen Filter, dann <em>[Spring MVC]</em>.</li>
+</ul>
+<h3 id="613-der-controller">6.1.3. <span style="color: #1f4d78">Der Controller</span></h3>
+<p>Die Datei <strong><em>[controllers/ScopesController.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span>
+<span class="normal"><a href="#__codelineno-5-36">36</a></span>
+<span class="normal"><a href="#__codelineno-5-37">37</a></span>
+<span class="normal"><a href="#__codelineno-5-38">38</a></span>
+<span class="normal"><a href="#__codelineno-5-39">39</a></span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span>
+<span class="normal"><a href="#__codelineno-5-41">41</a></span>
+<span class="normal"><a href="#__codelineno-5-42">42</a></span>
+<span class="normal"><a href="#__codelineno-5-43">43</a></span>
+<span class="normal"><a href="#__codelineno-5-44">44</a></span>
+<span class="normal"><a href="#__codelineno-5-45">45</a></span>
+<span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span>
+<span class="normal"><a href="#__codelineno-5-49">49</a></span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span>
+<span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span>
+<span class="normal"><a href="#__codelineno-5-58">58</a></span>
+<span class="normal"><a href="#__codelineno-5-59">59</a></span>
+<span class="normal"><a href="#__codelineno-5-60">60</a></span>
+<span class="normal"><a href="#__codelineno-5-61">61</a></span>
+<span class="normal"><a href="#__codelineno-5-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example23.controllers</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.ObjectProvider</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.HttpHeaders</span><span class="p">;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.ResponseCookie</span><span class="p">;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Controller</span><span class="p">;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.ui.Model</span><span class="p">;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.CookieValue</span><span class="p">;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.GetMapping</span><span class="p">;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example23.services.CounterService</span><span class="p">;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example23.services.ToolService</span><span class="p">;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">example23.services.RequestService</span><span class="p">;</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.servlet.http.HttpServletResponse</span><span class="p">;</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="c1">// ein Controller ist selbst eine SINGLETON-Bean: er wird nur einmal erzeugt</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="nd">@Controller</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ScopesController</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">CounterService</span><span class="w"> </span><span class="n">counter</span><span class="p">;</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">    </span><span class="c1">// eine Bean mit Request-Scope, in ein Singleton injiziert: Spring injiziert einen</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">    </span><span class="c1">// "Proxy", der jeden Aufruf an die Instanz der AKTUELLEN Anfrage weiterleitet</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">RequestService</span><span class="w"> </span><span class="n">request</span><span class="p">;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">    </span><span class="c1">// ein Prototype, in ein Singleton injiziert: EINMAL erzeugt, zusammen mit dem Controller</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ToolService</span><span class="w"> </span><span class="n">injectedTool</span><span class="p">;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">    </span><span class="c1">// um jedes Mal einen neuen Prototype zu erhalten: ihn bei Spring anfordern</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">ObjectProvider</span><span class="o">&lt;</span><span class="n">ToolService</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tools</span><span class="p">;</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ScopesController</span><span class="p">(</span><span class="n">CounterService</span><span class="w"> </span><span class="n">counter</span><span class="p">,</span><span class="w"> </span><span class="n">RequestService</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">ToolService</span><span class="w"> </span><span class="n">injectedTool</span><span class="p">,</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="w">            </span><span class="n">ObjectProvider</span><span class="o">&lt;</span><span class="n">ToolService</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tools</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">counter</span><span class="p">;</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">;</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">injectedTool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">injectedTool</span><span class="p">;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">tools</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tools</span><span class="p">;</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">record</span> <span class="nc">ScopesModel</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">total</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">instance</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">injectedTool</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">requestedTool</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">myVisits</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">scopes</span><span class="p">(</span><span class="nd">@CookieValue</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"myVisits"</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">cookie</span><span class="p">,</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="w">            </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">        </span><span class="c1">// Scope CLIENT: ein vom BROWSER gehaltenes Datum (Cookie),</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="w">        </span><span class="c1">// das mit jeder Anfrage an den Server zurückgesendet wird</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">myVisits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">toInteger</span><span class="p">(</span><span class="n">cookie</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">        </span><span class="n">ResponseCookie</span><span class="w"> </span><span class="n">newCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResponseCookie</span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="s">"myVisits"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">myVisits</span><span class="p">))</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">                </span><span class="p">.</span><span class="na">path</span><span class="p">(</span><span class="s">"/"</span><span class="p">).</span><span class="na">httpOnly</span><span class="p">(</span><span class="kc">true</span><span class="p">).</span><span class="na">sameSite</span><span class="p">(</span><span class="s">"Lax"</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="w">        </span><span class="n">response</span><span class="p">.</span><span class="na">addHeader</span><span class="p">(</span><span class="n">HttpHeaders</span><span class="p">.</span><span class="na">SET_COOKIE</span><span class="p">,</span><span class="w"> </span><span class="n">newCookie</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="w">        </span><span class="n">model</span><span class="p">.</span><span class="na">addAttribute</span><span class="p">(</span><span class="s">"model"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ScopesModel</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="na">increment</span><span class="p">(),</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getNumber</span><span class="p">(),</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="w">                </span><span class="n">injectedTool</span><span class="p">.</span><span class="na">getNumber</span><span class="p">(),</span><span class="w"> </span><span class="n">tools</span><span class="p">.</span><span class="na">getObject</span><span class="p">().</span><span class="na">getNumber</span><span class="p">(),</span><span class="w"> </span><span class="n">myVisits</span><span class="p">));</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"scopes/scopes"</span><span class="p">;</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="w">    </span><span class="c1">// "41" -&gt; 41; null oder "abc" -&gt; 0</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">toInteger</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">text</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">text</span><span class="p">);</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NumberFormatException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Lassen Sie uns diesen Code kommentieren:</p>
+<ul>
+<li>Zeilen 16–17: Ein Controller ist selbst ein Bean und damit ein Singleton: <em>[Spring]</em> erstellt ihn nur einmal und injiziert seine Abhängigkeiten in diesem Moment ein für alle Mal (Zeilen 29–35). Hier wird es interessant;</li>
+<li>Zeile 20: ein in ein Singleton injiziertes Singleton – nichts Besonderes;</li>
+<li>Zeile 23: ein Bean mit Request-Scope, das in ein Singleton injiziert wird. Beim Start gibt es keine aktive Anfrage und somit keine Instanz von <strong><em>[RequestService]</em></strong> zum Injizieren. Stattdessen injiziert <em>[Spring]</em> einen <strong>Proxy</strong> (einen Vermittler): ein Objekt, das dieselben Methoden hat wie <strong><em>[RequestService]</em></strong> und jeden Aufruf an die Instanz der <strong>aktuellen</strong> Anfrage weiterleitet, die bei Bedarf erstellt wird. Das bewirkt <strong><em>[@RequestScope]</em></strong>;</li>
+<li>Zeile 25: ein Prototype-Bean, das in ein Singleton injiziert wird. <em>[Spring]</em> erstellt eine Instanz ... genau eine, bei der Injektion. Der Controller behält sie für seine gesamte Lebensdauer: Dieses Feld ändert sich nie. Das ist die <strong>Falle</strong> des Prototype-Scopes: Er erzeugt nur bei jeder <strong>Anforderung</strong> an den <em>[Spring]</em>-Container eine neue Instanz, und ein Singleton fordert seine Abhängigkeiten nur einmal an;</li>
+<li>Zeile 27: Um jedes Mal eine neue Instanz zu erhalten, bekommt der Controller einen <strong><em>[ObjectProvider&lt;ToolService&gt;]</em></strong> – ein Objekt, das in der Lage ist, bei Bedarf einen <strong><em>[ToolService]</em></strong> von <em>[Spring]</em> anzufordern, und zwar über seine Methode <strong><em>[getObject()]</em></strong> (Zeile 50);</li>
+<li>Zeile 37: das View-Modell, ein Record (siehe Beispiel 03);</li>
+<li>Zeile 41: der Client-Scope, ein in einem Cookie gespeicherter Zähler. Die Annotation <strong><em>[@CookieValue]</em></strong> bindet den Parameter an das Cookie <strong><em>[myVisits]</em></strong> , das der Browser sendet; <strong><em>[required = false]</em></strong>: Der Parameter wird auf <strong><em>[null]</em></strong> gesetzt, wenn das Cookie fehlt (beim ersten Besuch);</li>
+<li>Zeile 45: der Browser-Zähler, um 1 erhöht. Die Methode <strong><em>[toInteger]</em></strong> (Zeilen 55–61) wandelt den Cookie-Text in eine ganze Zahl um; <strong><em>[Integer.parseInt]</em></strong> wirft eine <strong><em>[NumberFormatException]</em></strong> , wenn der Text keine ganze Zahl ist oder wenn er gleich <strong><em>[null]</em></strong> ist: Der Zähler wird dann auf 0 zurückgesetzt;</li>
+<li>Zeilen 46–48: Das Cookie wird mit seinem neuen Wert erneut gesetzt. <strong><em>[ResponseCookie]</em></strong> ist eine Klasse von <em>[Spring]</em> , die den Wert eines <strong><em>[Set-Cookie]</em></strong>-Headers erzeugt: Die Methoden, die seine Eigenschaften festlegen (Pfad, <strong><em>[HttpOnly]</em></strong>, <strong><em>[SameSite]</em></strong>), werden nacheinander aufgerufen, dann erzeugt <strong><em>[build()]</em></strong> das Objekt. Der Header wird von <strong><em>[response.addHeader]</em></strong> zur Antwort hinzugefügt;</li>
+<li>Zeilen 49–50: Der View werden Werte übergeben: der Anwendungszähler, die Instanznummer von <strong><em>[RequestService]</em></strong> für die aktuelle Anfrage, die Instanznummer des injizierten Prototyps, die Instanznummer eines in diesem Moment angeforderten Prototyps und der Client-Zähler.</li>
+</ul>
+<h3 id="614-die-view">6.1.4. <span style="color: #1f4d78">Die View</span></h3>
+<p>Die Datei <strong><em>[templates/scopes/scopes.html]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="cp">&lt;!doctype html&gt;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span> <span class="na">xmlns:th</span><span class="o">=</span><span class="s">"http://www.thymeleaf.org"</span><span class="p">&gt;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">&gt;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Scopes<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">href</span><span class="o">=</span><span class="s">"/bootstrap/css/bootstrap.min.css"</span><span class="p">&gt;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container py-3"</span> <span class="na">th:object</span><span class="o">=</span><span class="s">"${model}"</span><span class="p">&gt;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>    <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h3"</span><span class="p">&gt;</span>The scopes of data<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a>    <span class="cm">&lt;!--/* @requestService, @toolService: auch die View fragt bei Spring nach den Beans,</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="cm">           während DERSELBEN Anfrage */--&gt;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a>      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>application: [[*{total}]] visit(s) to the site, all browsers combined<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a>      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>request: instance no. [[*{instance}]] of RequestService (no. [[${@requestService.number}]] in the view),
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>        request received at [[${start}]]<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a>      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>prototype: instance no. [[*{injectedTool}]] (injected into the controller),
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a>        no. [[*{requestedTool}]] (requested by the controller), no. [[${@toolService.number}]] (requested by the view)<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a>      <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>client: [[*{myVisits}]] visit(s) from this browser<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a>    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 9: <strong><em>[th:object]</em></strong> (siehe Beispiele 18 und 19) verweist auf das Objekt [model]; die Ausdrücke <strong><em>[*{...}]</em></strong> in den untergeordneten Tags verweisen auf seine Eigenschaften: <strong><em>[*{total}]</em></strong> ist gleich <strong><em>[${model.total}]</em></strong>;</li>
+<li>Zeile 14: <strong><em>[[[...]]]</em></strong> fügt den Wert eines Ausdrucks maskiert in den Text ein, genau wie <strong><em>[th:text]</em></strong> (siehe Beispiel 14);</li>
+<li>Zeilen 15 und 18: Der Ausdruck <strong><em>[${@name}]</em></strong> verweist auf das Bean mit diesem Namen (siehe Beispiel 16). Die View fordert ihrerseits die Beans <strong><em>[requestService] und [toolService]</em></strong> bei <em>[Spring]</em> während derselben Anfrage wie die Action an: So können wir die vom Controller und von der View erhaltenen Instanzen vergleichen;</li>
+<li>Zeile 16: das vom Filter gesetzte Request-Attribut. Für <em>[Thymeleaf]</em> sind die Request-Attribute Variablen wie alle anderen.</li>
+</ul>
+<h3 id="615-ausfuhrung">6.1.5. <span style="color: #1f4d78">Ausführung</span></h3>
+<p>Eine Seite unter der URL <a href="http://localhost:5000/"><u><span style="color: #0563c1">http://localhost:5000/</span></u></a>:</p>
+<p><img src="images/10000000000002BE0000010F5C149EDE.png" width="428" height="165" style="width:11.322cm;height:4.371cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000010F5C149EDE.png" /></p>
+<p>Simulieren wir zwei Browser mit <em>[curl]</em> und zwei Cookie-Dateien, <strong><em>[a.txt]</em></strong> und <strong><em>[b.txt]</em></strong>: Die Option <strong><em>[-b]</em></strong> sendet die Cookies aus der Datei, während die Option <strong><em>[-c]</em></strong> die vom Server gesetzten Cookies in der Datei speichert. Browser A hat zwei Anfragen gestellt, dann Browser B eine, und schließlich A eine letzte Anfrage (der Server wurde gerade neu gestartet):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>curl -c a.txt -b a.txt http://localhost:5000/
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>curl -c a.txt -b a.txt http://localhost:5000/
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>curl -c b.txt -b b.txt http://localhost:5000/
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>curl -c a.txt -b a.txt http://localhost:5000/
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span>
+<span class="normal"><a href="#__codelineno-8-22">22</a></span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span>
+<span class="normal"><a href="#__codelineno-8-24">24</a></span>
+<span class="normal"><a href="#__codelineno-8-25">25</a></span>
+<span class="normal"><a href="#__codelineno-8-26">26</a></span>
+<span class="normal"><a href="#__codelineno-8-27">27</a></span>
+<span class="normal"><a href="#__codelineno-8-28">28</a></span>
+<span class="normal"><a href="#__codelineno-8-29">29</a></span>
+<span class="normal"><a href="#__codelineno-8-30">30</a></span>
+<span class="normal"><a href="#__codelineno-8-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>browser A:
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>&lt;li&gt;application: 1 visit(s) to the site, all browsers combined&lt;/li&gt;
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>&lt;li&gt;request: instance no. 1 of RequestService (no. 1 in the view),
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>request received at 18:47:52.627&lt;/li&gt;
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>&lt;li&gt;prototype: instance no. 1 (injected into the controller),
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>no. 2 (requested by the controller), no. 3 (requested by the view)&lt;/li&gt;
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>&lt;li&gt;client: 1 visit(s) from this browser&lt;/li&gt;
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>browser A:
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>&lt;li&gt;application: 2 visit(s) to the site, all browsers combined&lt;/li&gt;
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>&lt;li&gt;request: instance no. 2 of RequestService (no. 2 in the view),
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a>request received at 18:47:53.015&lt;/li&gt;
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a>&lt;li&gt;prototype: instance no. 1 (injected into the controller),
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a>no. 4 (requested by the controller), no. 5 (requested by the view)&lt;/li&gt;
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a>&lt;li&gt;client: 2 visit(s) from this browser&lt;/li&gt;
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a>browser B:
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a>&lt;li&gt;application: 3 visit(s) to the site, all browsers combined&lt;/li&gt;
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a>&lt;li&gt;request: instance no. 3 of RequestService (no. 3 in the view),
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a>request received at 18:47:53.099&lt;/li&gt;
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a>&lt;li&gt;prototype: instance no. 1 (injected into the controller),
+<a id="__codelineno-8-22" name="__codelineno-8-22"></a>no. 6 (requested by the controller), no. 7 (requested by the view)&lt;/li&gt;
+<a id="__codelineno-8-23" name="__codelineno-8-23"></a>&lt;li&gt;client: 1 visit(s) from this browser&lt;/li&gt;
+<a id="__codelineno-8-24" name="__codelineno-8-24"></a>
+<a id="__codelineno-8-25" name="__codelineno-8-25"></a>browser A:
+<a id="__codelineno-8-26" name="__codelineno-8-26"></a>&lt;li&gt;application: 4 visit(s) to the site, all browsers combined&lt;/li&gt;
+<a id="__codelineno-8-27" name="__codelineno-8-27"></a>&lt;li&gt;request: instance no. 4 of RequestService (no. 4 in the view),
+<a id="__codelineno-8-28" name="__codelineno-8-28"></a>request received at 18:47:53.133&lt;/li&gt;
+<a id="__codelineno-8-29" name="__codelineno-8-29"></a>&lt;li&gt;prototype: instance no. 1 (injected into the controller),
+<a id="__codelineno-8-30" name="__codelineno-8-30"></a>no. 8 (requested by the controller), no. 9 (requested by the view)&lt;/li&gt;
+<a id="__codelineno-8-31" name="__codelineno-8-31"></a>&lt;li&gt;client: 3 visit(s) from this browser&lt;/li&gt;
+</code></pre></div></td></tr></table></div>
+<p>(nur die Elemente der Liste sind dargestellt). Wir stellen fest, dass:</p>
+<ul>
+<li>der Anwendungszähler alle Besuche zählt: 1, 2, 3, 4;</li>
+<li>jede Anfrage ihre eigene Instanz von <strong><em>[RequestService]</em></strong> hat: 1, 2, 3, 4. Während einer Anfrage greifen der Controller (über seinen Proxy) und die View auf <strong>dieselbe</strong> Instanz zu;</li>
+<li>der in den Controller injizierte Prototyp stets die Nr. 1 ist: beim Start mit dem Controller erstellt, wird er nie ersetzt. Die <strong>angeforderten</strong> Prototypen sind jedes Mal neu: Controller und View erhalten zwei verschiedene, und jede Anfrage erzeugt zwei neue;</li>
+<li>der Client-Zähler für jeden Browser eigen ist: A hat 3 Besuche, B hat 1.</li>
+</ul>
+<p>Die Datei <strong><em>[a.txt]</em></strong>, die von <em>[curl]</em> gepflegt wird, enthält das Cookie von Browser A:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a># Netscape HTTP Cookie File
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a># https://curl.se/docs/http-cookies.html
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a># This file was generated by libcurl! Edit at your own risk.
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>#HttpOnly_localhost    FALSE    /    FALSE    0    myVisits    3
+</code></pre></div></td></tr></table></div>
+<p>Dieses Cookie wird vom Client kontrolliert, der jeden beliebigen Wert senden kann:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>curl -i -b "myVisits=41" http://localhost:5000/
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span>
+<span class="normal"><a href="#__codelineno-11-25">25</a></span>
+<span class="normal"><a href="#__codelineno-11-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>HTTP/1.1 200
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>Set-Cookie: myVisits=42; Path=/; HttpOnly; SameSite=Lax
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>Content-Type: text/html;charset=UTF-8
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>&lt;!doctype html&gt;
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a>&lt;html lang="en"&gt;
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>&lt;head&gt;
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>  &lt;meta charset="utf-8"&gt;
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>  &lt;title&gt;Scopes&lt;/title&gt;
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>  &lt;link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"&gt;
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>&lt;/head&gt;
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a>&lt;body&gt;
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a>  &lt;div class="container py-3"&gt;
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a>    &lt;h1 class="h3"&gt;The scopes of data&lt;/h1&gt;
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a>    &lt;ul&gt;
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a>      &lt;li&gt;application: 5 visit(s) to the site, all browsers combined&lt;/li&gt;
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a>      &lt;li&gt;request: instance no. 5 of RequestService (no. 5 in the view),
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a>        request received at 18:47:53.178&lt;/li&gt;
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a>      &lt;li&gt;prototype: instance no. 1 (injected into the controller),
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a>        no. 10 (requested by the controller), no. 11 (requested by the view)&lt;/li&gt;
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a>      &lt;li&gt;client: 42 visit(s) from this browser&lt;/li&gt;
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a>    &lt;/ul&gt;
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a>  &lt;/div&gt;
+<a id="__codelineno-11-25" name="__codelineno-11-25"></a>&lt;/body&gt;
+<a id="__codelineno-11-26" name="__codelineno-11-26"></a>&lt;/html&gt;
+</code></pre></div></td></tr></table></div>
+<p>Für einen Besucherzähler ist das unerheblich. Bei sensiblen Daten (Identität des Benutzers, seine Rolle) muss der Server Manipulationen erkennen können: Kapitel 8 zeigt, wie.</p>
+<p>Aus diesen Scopes folgt eine Regel: Ein Bean darf kein Bean mit kürzerem Scope <strong>behalten</strong>. Ein Singleton, das direkt eine Instanz mit Request-Scope erhalten hätte, würde sie unbegrenzt behalten, weit über die Anfrage hinaus, für die sie erstellt wurde. <em>[ASP.NET Core]</em> prüft diese Regel beim Start im Entwicklungsmodus und weigert sich zu starten, wenn sie verletzt wird. <em>[Spring]</em> geht anders vor: Für den Request-Scope <strong><em>[@RequestScope]</em></strong> injiziert einen Proxy, was die Injektion sicher macht; für den Prototype-Scope führt es keine Prüfung durch, und das Ergebnis haben wir gerade gesehen: ein „Prototype“, der sich wie ein Singleton verhält. Wenn tatsächlich eine neue Instanz benötigt wird, wird sie bei <em>[Spring]</em> über einen <strong><em>[ObjectProvider]</em></strong> angefordert.</p>
+<p>In der Fallstudie:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Scope</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Daten</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Wo?</b></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Application</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Listen von Ärzten und Clients, Wörterbücher, ausstehende CAPTCHAs, Versuchszähler</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Singleton-Beans (<i><b>[ApplicationModel]</b></i>, <i><b>[Translator]</b></i>, <i><b>[CaptchaService]</b></i>, <i><b>[AttemptLimiterService]</b></i>...); die Geschäftsschicht und der Datenzugriff sind ebenfalls zustandslose Singletons</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Anfrage</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">View-Modell, angemeldeter Benutzer</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">das Modell (<i><b>[Model]</b></i>), ergänzt durch <i><b>[CommonModel]</b></i>; der Sicherheitskontext von <i>[Spring Security]</i></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Client</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Authentifizierungs-Token, Sprache, Flash-Nachricht</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Cookies</div></td></tr></table>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,873 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-springmvc-sept-2026/anhange.html">
+      
+      
+        <link rel="prev" href="fazit.html">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>13. Anhänge - Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#13-anhange" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              13. Anhänge
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="einfuhrung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einführung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="das-action-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-template.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gultigkeitsbereiche-scopes-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche (Scopes) von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="anhange.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131-installation-von-jdk-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1. Installation von JDK 21
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-maven-und-der-maven-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2. Maven und der Maven Wrapper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-installation-von-visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3. Installation von Visual Studio Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-installation-von-mysql-mit-laragon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4. Installation von MySQL mit Laragon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#135-installation-von-curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5. Installation von curl
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="13-anhange">13. <span style="color: #2e74b5">Anhänge</span></h1>
+<h2 id="131-installation-von-jdk-21">13.1. <span style="color: #2e74b5">Installation von JDK 21</span></h2>
+<p><em>Das [JDK]</em> (<em>[Java Development Kit]</em>) enthält den Compiler <strong><em>[javac]</em></strong> und die virtuelle Maschine <strong><em>[java]</em></strong>. Es gibt mehrere kostenlose Distributionen; wir verwenden <em>[Eclipse Temurin]</em> aus dem Projekt <em>[Adoptium]</em>, das von <a href="https://adoptium.net/"><u><span style="color: #0563c1">adoptium.net</span></u></a> heruntergeladen werden kann: Wählen Sie Version 21 (LTS) und dann den Installer für Ihr System (<em>[Windows]</em> x64, <em>[macOS]</em>, <em>[Linux]</em>).</p>
+<p>Unter <em>[Windows]</em> bietet der <strong><em>[.msi]</em></strong>-Installer auf dem Anpassungsbildschirm die Option „Set JAVA_HOME variable“ an; diese Option ist standardmäßig deaktiviert – Sie müssen sie aktivieren. Die Umgebungsvariable <strong><em>[JAVA_HOME]</em></strong> gibt den Speicherort des <em>[JDK]</em> an; der Maven Wrapper nutzt sie, um <em>[Java]</em> zu finden. Sie können auch den Paketmanager <em>[winget]</em> verwenden:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>winget install EclipseAdoptium.Temurin.21.JDK
+</code></pre></div></td></tr></table></div>
+<p>Unter <em>[macOS]</em> verwenden Sie den Installer <strong><em>[.pkg]</em></strong> von derselben Seite oder den Paketmanager <em>[Homebrew]</em> (<strong><em>[brew install --cask temurin@21]</em></strong>). Unter <em>[Linux]</em> (<em>[Ubuntu]</em> zum Beispiel) eignet sich das Paket <strong><em>[openjdk-21-jdk]</em></strong> aus den Repositories der Distribution:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo apt install openjdk-21-jdk
+</code></pre></div></td></tr></table></div>
+<p>Prüfen Sie die Installation in einer neuen Konsole (<em>[PowerShell]</em>, Eingabeaufforderung oder Terminal):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>java -version
+</code></pre></div></td></tr></table></div>
+<p>Es sollte eine Versionsnummer anzeigen, die mit 21 beginnt (zum Beispiel <strong><em>[openjdk version &quot;21.0.10&quot;]</em></strong>). Ein neueres <em>[JDK]</em> (zum Beispiel 25) funktioniert ebenfalls; ein älteres <em>[JDK]</em> (zum Beispiel 17) führt bei der Kompilierung zum Fehler <strong><em>[release version 21 not supported]</em></strong>.</p>
+<h2 id="132-maven-und-der-maven-wrapper">13.2. <span style="color: #2e74b5">Maven und der Maven Wrapper</span></h2>
+<p>Es muss nichts installiert werden: Der Ordner <strong><em>[examples]</em></strong> und der Ordner der Fallstudie enthalten jeweils den <strong>Maven Wrapper</strong>, die Skripte <strong><em>[mvnw]</em></strong> (<em>[Linux]</em>, <em>[macOS]</em>) und <strong><em>[mvnw.cmd]</em></strong> (<em>[Windows]</em>) sowie die Datei <strong><em>[.mvn/wrapper/maven-wrapper.properties]</em></strong>, die die zu verwendende Version von <em>[Maven]</em> festlegt (3.9.11). Beim ersten Ausführen lädt das Skript diese Version von <em>[Maven]</em> herunter und speichert sie im Home-Verzeichnis des Benutzers (Ordner <strong><em>[.m2/wrapper]</em></strong>); bei späteren Ausführungen wird sie wiederverwendet. <em>[Maven]</em> lädt seinerseits die Bibliotheken des Projekts aus dem Repository <a href="https://central.sonatype.com/"><u><span style="color: #0563c1">Maven Central</span></u></a> herunter und speichert sie im Ordner <strong><em>[.m2/repository]</em></strong>. Beim ersten Kompilieren ist daher eine Internetverbindung erforderlich.</p>
+<p>Der Maven Wrapper benötigt <em>[Java]</em>: Er verwendet das <em>[JDK]</em> aus der Variablen <strong><em>[JAVA_HOME]</em></strong> oder, falls diese fehlt, den im Pfad gefundenen Befehl <strong><em>[java]</em></strong> (<strong><em>[PATH]</em></strong>). Um zu prüfen, ob alles vorhanden ist, kompilieren Sie alle Beispiele aus dem Ordner <strong><em>[examples]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>./mvnw compile
+</code></pre></div></td></tr></table></div>
+<p>(<strong><em>[.\mvnw compile]</em></strong> unter <em>[Windows]</em>). Der Befehl endet mit <strong><em>[BUILD SUCCESS]</em></strong>.</p>
+<p>Wenn Sie <em>[Maven]</em> lieber selbst installieren (<a href="https://maven.apache.org/"><u><span style="color: #0563c1">maven.apache.org</span></u></a>), ersetzt der Befehl <strong><em>[mvn]</em></strong> in allen Befehlen des Dokuments <strong><em>[mvnw]</em></strong>.</p>
+<h2 id="133-installation-von-visual-studio-code">13.3. <span style="color: #2e74b5">Installation von Visual Studio Code</span></h2>
+<p>Laden Sie <em>[Visual Studio Code]</em> von <a href="https://code.visualstudio.com/"><u><span style="color: #0563c1">code.visualstudio.com</span></u></a> herunter. Fügen Sie zwei Erweiterungen hinzu (Menü Ansicht &gt; Erweiterungen, dann nach ihren Namen suchen):</p>
+<ul>
+<li><em>[Extension Pack for Java]</em> von Microsoft: eine Sammlung von Erweiterungen, die Syntaxhervorhebung, Code-Vervollständigung und Fehlermeldungen für <em>[Java]</em>-Code bietet; Unterstützung für <em>[Maven]</em>-Projekte (Bereich „Java Projects“); den Debugger und die automatische Kompilierung jeder gespeicherten Datei;</li>
+<li><em>[Spring Boot Extension Pack]</em> von VMware (<a href="https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack"><u><span style="color: #0563c1">marketplace.visualstudio.com</span></u></a>): Autovervollständigung für Properties in <strong><em>[application.properties]</em></strong>, Navigation zwischen Beans und URL-Controllern sowie den Bereich „Spring Boot Dashboard“, der die <em>[Spring Boot]</em> -Anwendungen im geöffneten Ordner auflistet und es erlaubt, jede mit einem einzigen Klick zu starten oder zu stoppen.</li>
+</ul>
+<p>Öffnen Sie den Ordner <strong><em>[examples]</em></strong> oder den Ordner der Fallstudie (Menü Datei / Ordner öffnen); im integrierten Terminal (Menü Terminal / Neues Terminal) können Sie <strong><em>[mvnw]</em></strong>-Befehle ausführen, ohne den Editor zu verlassen. Die Taste F5 führt in der Startklasse einer Anwendung (der mit <strong><em>[@SpringBootApplication]</em></strong> annotierten) die Anwendung unter der Kontrolle des Debuggers aus.</p>
+<h2 id="134-installation-von-mysql-mit-laragon">13.4. <span style="color: #2e74b5">Installation von MySQL mit Laragon</span></h2>
+<p><em>[Laragon]</em> (<a href="https://laragon.org/"><u><span style="color: #0563c1">laragon.org</span></u></a>) installiert einen gebrauchsfertigen <em>[MySQL]</em>-Server (oder <em>[MariaDB]</em>) zusammen mit dem Verwaltungswerkzeug <em>[HeidiSQL]</em>. Nach der Installation:</p>
+<ul>
+<li>Die Schaltfläche „Alles starten“ startet den <em>[MySQL]</em>-Server auf Port 3306;</li>
+<li>Der Benutzer <strong><em>[root]</em></strong> hat kein Passwort: Das sind die Standardwerte der Properties <strong><em>[spring.datasource.*]</em></strong> aus Beispiel 28 und der Fallstudie;</li>
+<li>Die Schaltfläche „Datenbank“ öffnet <em>[HeidiSQL]</em>, wo der Menüpunkt Datei / SQL-Datei ausführen die Skripte <strong><em>[dbpersons.sql]</em></strong> (Beispiel 28) und <strong><em>[dbrdvmedecins2.sql]</em></strong> (Fallstudie) ausführt.</li>
+</ul>
+<p>Unter <em>[Linux]</em> oder <em>[macOS]</em> installieren Sie <em>[MySQL]</em> oder <em>[MariaDB]</em> mit dem Paketmanager des Systems und führen die Skripte mit dem Kommandozeilen-Client <strong><em>[mysql]</em></strong> aus. Der <em>[JDBC]</em> -Treiber von <em>[MySQL]</em> funktioniert auch ohne jede Konfiguration mit <em>[MariaDB]</em>: <em>[Hibernate]</em> zeigt beim Start lediglich die Warnung <strong><em>[HHH000511]</em></strong> an, ohne Folgen (siehe Beispiel 28).</p>
+<h2 id="135-installation-von-curl">13.5. <span style="color: #2e74b5">Installation von curl</span></h2>
+<p><em>[curl]</em> ist in <em>[Windows]</em> 10 und 11, <em>[macOS]</em> und den meisten <em>[Linux]</em>-Distributionen enthalten. In <em>[PowerShell]</em> müssen Sie <strong><em>[curl.exe]</em></strong> eingeben, nicht <strong><em>[curl]</em></strong>: In älteren Versionen von <em>[PowerShell]</em> ist <strong><em>[curl]</em></strong> ein Alias für einen anderen Befehl (<strong><em>[Invoke-WebRequest]</em></strong>), der andere Optionen hat.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

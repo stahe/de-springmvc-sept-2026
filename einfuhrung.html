@@ -1,0 +1,1352 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-springmvc-sept-2026/einfuhrung.html">
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="controller-actions-routing.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Einführung - Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-einfuhrung" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Einführung
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [Spring MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-springmvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einführung
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="einfuhrung.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einführung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-die-rolle-von-spring-mvc-in-einer-webanwendung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Die Rolle von Spring MVC in einer Webanwendung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-verwendete-werkzeuge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Verwendete Werkzeuge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-die-fallstudie-ausfuhren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Die Fallstudie ausführen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-beispiele" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Beispiele
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-inhalt-des-dokuments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5. Inhalt des Dokuments
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="das-action-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-template.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gultigkeitsbereiche-scopes-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche (Scopes) von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-einfuhrung">1. <span style="color: #2e74b5">Einführung</span></h1>
+<p>Das PDF des Dokuments finden Sie |<a href="https://1drv.ms/b/c/f53a919f43d27eb5/IQDpkyV3Bu4fTpMPWBZT70j7AbbIY1JelFRH7YO7jlawZSQ?e=Sx7CXE">HIER</a>|.</p>
+<p>Den Code des Dokuments finden Sie |<a href="https://1drv.ms/u/c/f53a919f43d27eb5/IQBBh0cl0CpPTp9sWxWaJUejATfUzJimjGiihrqQpkA-1bU?e=iIbroU">HIER</a>|.</p>
+<p>Dieses Dokument ist ein Produkt der KI Claude von Anthropic. Es knüpft an das Dokument <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026/"><u><span style="color: #0563c1">„Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]</span></u></a>“ (2026) an, das seinerseits auf das Dokument <a href="https://stahe.github.io/de-nestjs-html-sept-2026/"><u><span style="color: #0563c1">„Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]“</span></u></a> (2026) folgte. Dieses Dokument überträgt den Kurs <em>[ASP.NET Core MVC]</em> auf die <em>[Java]</em>-Umgebung:</p>
+<ul>
+<li>das Framework <em>[ASP.NET Core MVC]</em> und die Sprache <em>[C#]</em> werden durch das Framework <em>[Spring MVC]</em> nebst <em>[Spring Boot]</em> 4 und die Sprache <em>[Java]</em> 21 ersetzt;</li>
+<li>die <em>[Razor]</em>-Views werden durch <em>[Thymeleaf]</em>-Views ersetzt;</li>
+<li>der ORM <em>[Entity Framework Core]</em> wird ersetzt durch <em>[Spring Data JPA]</em> und den ORM <em>[Hibernate]</em>, weiterhin auf Basis von <em>[MySQL]</em>.</li>
+</ul>
+<p>Das Dokument folgt eng dem Aufbau des Kurses <em>[ASP.NET Core MVC]</em>: zunächst zahlreiche kleine Projekte, die sich jeweils auf ein einzelnes Konzept konzentrieren, danach eine umfassende Fallstudie – eine Webanwendung zur Terminverwaltung einer Arztpraxis – mit vollständig kommentierten Dateien. Die Beispiele haben dieselben Nummern und behandeln dieselben Themen wie im Kurs <em>[ASP.NET Core MVC]</em>: Wer diesen Kurs kennt, kann die beiden Frameworks Beispiel für Beispiel vergleichen. Das ist jedoch nicht erforderlich: Dieses Dokument ist in sich abgeschlossen und setzt weder Kenntnisse von <em>[ASP.NET]</em> noch, was das betrifft, von <em>[Spring]</em> voraus. Die einzigen Voraussetzungen sind ein grundlegendes Verständnis der Webprogrammierung (das HTTP-Protokoll, die Sprache HTML) und die Sprache <em>[Java]</em>.</p>
+<h2 id="11-die-rolle-von-spring-mvc-in-einer-webanwendung">1.1. <span style="color: #2e74b5">Die Rolle von Spring MVC in einer Webanwendung</span></h2>
+<p>Eine Webanwendung wird oft in Schichten aufgebaut, wobei jede Schicht nur mit ihren Nachbarschichten kommuniziert:</p>
+<p><img src="images/10000000000003D40000014AB09B8586.png" width="597" height="201" style="width:15.806cm;height:5.322cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000003D40000014AB09B8586.png" /></p>
+<ul>
+<li>Die Web-Schicht empfängt die HTTP-Anfragen des Browsers und liefert ihm HTML-Seiten zurück. <em>[Spring MVC]</em> hilft uns beim Schreiben dieser Schicht;</li>
+<li>die Geschäftsschicht enthält die Geschäftsregeln der Anwendung (z. B. „ein Patient darf nur einen bevorstehenden Termin haben“). Sie weiß nichts vom Web: Sie könnte genauso gut eine Kommandozeilenanwendung bedienen;</li>
+<li>die Datenzugriffsschicht (<em>[DAO]</em>-Schicht, für <em>[Data Access Object]</em>) liest aus der Datenbank und schreibt in sie. Wir verwenden <em>[Spring Data JPA]</em>, das auf dem ORM <em>[Hibernate]</em> (<em>[Object Relational Mapper]</em>) beruht, um die Zeilen der Tabellen und die Objekte in <em>[Java]</em> aufeinander abzubilden.</li>
+</ul>
+<p>Die Web-Schicht selbst folgt dem <em>[MVC]</em> -(<em>[Model – View – Controller]</em>)-Modell:</p>
+<ul>
+<li>der Controller (C) ist eine Klasse, deren Methoden, <strong>Actions</strong> genannt, jeweils eine bestimmte Art von Anfrage behandeln (zum Beispiel <strong><em>[GET /schedule]</em></strong>). Eine Action liest die Anfrageparameter, ruft die Geschäftsschicht auf und wählt dann die anzuzeigende View aus;</li>
+<li>das Modell (M) ist die Menge der Daten, die die Action an die View übergibt;</li>
+<li>die View (V) ist eine Datei vom Typ <em>[Thymeleaf]</em> (mit der Endung <strong><em>[.html]</em></strong>): eine HTML-Seite, in der bestimmte Tags Attribute <strong><em>[th:...]</em></strong> (<strong><em>[th:text]</em></strong>, <strong><em>[th:each]</em></strong> ...) tragen, die die <em>[Thymeleaf]</em>-Engine durch Daten aus dem Modell ersetzt.</li>
+</ul>
+<p>Die Verarbeitung einer Anfrage folgt den nummerierten Schritten im Diagramm:</p>
+<ul>
+<li>1: Der Browser sendet eine HTTP-Anfrage, zum Beispiel <strong><em>[GET /schedule?doctorId=1&amp;day=2026-09-24]</em></strong>;</li>
+<li>2: Der Webserver <em>[Tomcat]</em>, der von <em>[Spring Boot]</em> in die Anwendung eingebettet wird, empfängt die Anfrage. Sie durchläuft eine Reihe von <strong>Filtern</strong> (Lesen von Cookies, Authentifizierung usw.) und erreicht dann den <strong><em>[DispatcherServlet]</em></strong>, den zentralen Einstiegspunkt von <em>[Spring MVC]</em>, der die Action auswählt, die für diese Anfrage zuständig ist: Das ist das <strong>Routing</strong>. Bevor die Anfrage die Action erreicht, kann sie noch <strong>Interceptors</strong> durchlaufen, die wir in späteren Kapiteln behandeln;</li>
+<li>3: Die Action fordert die benötigten Daten von der Geschäftsschicht an; falls nötig, wendet sich die Geschäftsschicht an die <em>[DAO]</em>-Schicht, die die Datenbank <em>[MySQL]</em> in SQL abfragt;</li>
+<li>4: Die Action erstellt das View-Modell M und bestimmt die View, die es anzeigen soll;</li>
+<li>5: Die View-Engine <em>[Thymeleaf]</em> erzeugt das HTML der Seite, die <em>[Spring MVC]</em> an den Browser zurückgibt.</li>
+</ul>
+<p><em>[Spring]</em> ist das weltweit am häufigsten eingesetzte Framework (<em>[Java])</em> für die Entwicklung von Unternehmensanwendungen. Es ist frei und quelloffen und funktioniert überall dort, wo <em>[Java]</em> (<em>[Windows]</em>, <em>[Linux]</em>, <em>[macOS]</em>) läuft. <em>[Spring MVC]</em> ist die Web-Komponente; <em>[Spring Boot]</em> ist eine zusätzliche Schicht, die anhand der im Projekt vorhandenen Bibliotheken die gesamte Umgebung automatisch konfiguriert (Webserver, JSON-Konvertierung, View-Engine, Datenzugriff usw.) und die Anwendung in ein gewöhnliches <em>[Java]</em>-Programm verwandelt, das über eine <strong><em>[main]</em></strong>-Methode gestartet wird. <em>[Spring MVC]</em> kann Server erstellen, die JSON an einen <em>[JavaScript]</em>-Client (<em>[Angular]</em>, <em>[React]</em>, <em>[Flutter]</em> ...) liefern, ebenso wie klassische Webanwendungen, bei denen der Server die HTML-Seiten erzeugt und der Browser sie lediglich anzeigt. Dieses Dokument konzentriert sich auf den zweiten Anwendungsfall. Wie <em>[ASP.NET Core]</em> <em>[Spring]</em> beruht es auf zwei Ideen: <strong>Annotationen</strong> (<strong><em>[@GetMapping]</em></strong>, <strong><em>[@RequestMapping]</em></strong>, <strong><em>[@PreAuthorize]</em></strong> ...) beschreiben die Rollen von Klassen und Methoden, und die <strong>Dependency Injection</strong> versorgt jedes Objekt mit den Abhängigkeiten, die es benötigt. <em>[Spring]</em> ist tatsächlich eines der Frameworks, die diese zweite Idee bekannt gemacht haben.</p>
+<h2 id="12-verwendete-werkzeuge">1.2. <span style="color: #2e74b5">Verwendete Werkzeuge</span></h2>
+<p>Die Beispiele wurden mit den folgenden Werkzeugen geschrieben und getestet (ihre Installation wird im Anhang beschrieben):</p>
+<ul>
+<li><em>[JDK]</em> 21 (<em>[Java Development Kit]</em>), das den Compiler <strong><em>[javac]</em></strong> und die virtuelle Maschine <strong><em>[java]</em></strong> enthält. <em>[Java]</em> 21 ist eine LTS-Version (Long-Term Support);</li>
+<li>das Build-Werkzeug <em>[Maven]</em> 3.9.11, das nicht installiert werden muss: Jedes Projekt enthält einen <strong>Maven Wrapper</strong> (die Skripte <strong><em>[mvnw]</em></strong> und <strong><em>[mvnw.cmd]</em></strong>), der bei der ersten Verwendung automatisch die passende Version von <em>[Maven]</em> herunterlädt;</li>
+<li>der Editor <em>[Visual Studio Code]</em> mit den Erweiterungen <em>[Extension Pack for Java]</em> und <em>[Spring Boot Extension Pack]</em> ;</li>
+<li>ein aktueller Browser (<em>[Chrome]</em>, <em>[Firefox]</em>, <em>[Edge]</em>);</li>
+<li>das Kommandozeilenwerkzeug <em>[curl]</em>, das die rohen HTTP-Antworten anzeigt (es ist in <em>[Windows]</em> 10 und 11 enthalten);</li>
+<li>das DBMS <em>[MySQL]</em> (oder <em>[MariaDB]</em>), zum Beispiel das von <em>[Laragon]</em> unter <em>[Windows]</em>, ab dem Kapitel zum Datenzugriff und für die Fallstudie.</li>
+</ul>
+<p>Anders als das SDK und <em>[.NET]</em>, die <em>[ASP.NET Core]</em> enthalten, <em>[JDK]</em> enthält das JDK kein <em>[Spring]</em>: Das Framework ist eine Sammlung von Bibliotheken, die <em>[Maven]</em> bei der ersten Kompilierung aus dem zentralen Repository <em>[Maven Central]</em> herunterlädt (an diesem Tag muss also eine Internetverbindung bestehen) und dann in einem lokalen Ordner ablegt (<strong><em>[.m2]</em></strong> im Home-Verzeichnis des Benutzers). Diese Bibliotheken sind in <strong>Startern</strong> zusammengefasst: Ein Starter ist eine einzelne Abhängigkeit, die alles liefert, was für eine bestimmte Funktion nötig ist. Alle Beispiele verwenden <strong><em>[spring-boot-starter-webmvc]</em></strong> (<em>[Spring MVC]</em> und den Server <em>[Tomcat]</em>); hinzu kommen <strong><em>[spring-boot-starter-validation]</em></strong> (Datenvalidierung, ab Kapitel 3), <strong><em>[spring-boot-starter-thymeleaf]</em></strong> (Views, ab Kapitel 4), <strong><em>[spring-boot-starter-security-oauth2-resource-server]</em></strong> (<em>[Spring Security]</em> und die JWT-Token, in Kapitel 8), <strong><em>[spring-boot-starter-data-jpa]</em></strong> und der Treiber <strong><em>[mysql-connector-j]</em></strong> (Datenbankzugriff, in Kapitel 9). Die verwendeten Versionen sind die von <em>[Spring Boot]</em> 4.1.1: <em>[Spring Framework]</em> 7.0.9, <em>[Spring Security]</em> 7.1.1, <em>[Hibernate]</em> 7.4.5, <em>[Thymeleaf]</em> 3.1.5, <em>[Jackson]</em> 3 (JSON-Konvertierung) und <em>[Tomcat]</em> 11.</p>
+<h2 id="13-die-fallstudie-ausfuhren">1.3. <span style="color: #2e74b5">Die Fallstudie ausführen</span></h2>
+<p><strong>Anmerkung des Prüfers</strong>: Ich empfehle dem Leser, die Fallstudie sofort wie unten beschrieben auszuführen. Wenn Sie die Rolle dieser Terminverwaltungsanwendung vollständig verstanden haben, bitten Sie Ihre Lieblings-KI, die Anwendung wie folgt zu ändern: Ab sofort kann jeder Arzt:</p>
+<ul>
+<li>seine eigenen Terminfenster zwischen zwei Daten festlegen. So kann er seinen Terminkalender nach Bedarf anpassen;</li>
+<li>bestimmte Zeitfenster für einen bestimmten Tag aus dem Kalender entfernen – zum Beispiel, wenn er aus privaten Gründen nicht verfügbar ist;</li>
+</ul>
+<p>Die Änderung ist nicht trivial, da sie eine Änderung der Datenbankstruktur erfordert. Bitten Sie die KI, Ihnen den neuen Anwendungscode und das SQL-Skript zur Erstellung der neuen Datenbank zu liefern. Dazu müssen Sie ihr die ZIP-Datei mit dem vollständigen Projekt sowie das SQL-Skript der alten Datenbank übergeben.</p>
+<p>Außerdem habe ich den von <strong>Claude</strong> erstellten Kurs nicht geprüft. Er hatte bereits zwei perfekte Kurse erstellt: [NestJS] und [ASP.NET Core MVC]. Ich bin davon ausgegangen, dass das auch hier der Fall ist. Wenn Sie beim Verständnis auf ein Problem stoßen, ist die Lösung immer dieselbe: Bitten Sie Ihre Lieblings-KI, Ihnen zu erklären, was Sie nicht verstehen. <strong>Claude</strong> ist zum Beispiel sehr gut darin. Möglicherweise müssen Sie ihm das Beispiel, das Sie nicht verstehen, „hochladen“.</p>
+<p><strong>Ende der Anmerkung</strong>.</p>
+<p>Die Fallstudie am Ende dieses Dokuments ist eine vollständige Anwendung. Leser werden sie wahrscheinlich in Aktion sehen wollen, bevor sie sich in die Details des Frameworks vertiefen: Hier steht, wie man sie ausführt. Sie befindet sich im Ordner <strong><em>[rdvmedecins2-spring-mvc]</em></strong>, neben dem Ordner <strong><em>[examples]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>springmvc-sept-2026/
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── examples/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>└── rdvmedecins2-spring-mvc/
+</code></pre></div></td></tr></table></div>
+<p>Sie müssen <em>[JDK]</em> 21, <em>[Visual Studio Code]</em> und <em>[MySQL]</em> installiert haben (siehe Anhänge). <em>[Maven]</em> muss nicht installiert werden. Anschließend:</p>
+<ul>
+<li><strong>Legen Sie die Datenbank</strong> <strong><em>[dbrdvmedecins2]</em></strong> <strong>an,</strong> indem Sie das Skript <strong><em>[rdvmedecins2-spring-mvc/database/dbrdvmedecins2.sql]</em></strong> ausführen. Öffnen Sie mit <em>[Laragon]</em> das Werkzeug <em>[HeidiSQL]</em> (Schaltfläche „Datenbank“) und führen Sie das Skript dann über das Menü Datei / SQL-Datei ausführen aus. In der Kommandozeile, aus dem Ordner <strong><em>[rdvmedecins2-spring-mvc]</em></strong>:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>mysql -u root &lt; database/dbrdvmedecins2.sql
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Prüfen Sie die Verbindung zur Datenbank</strong>. Die Anwendung verbindet sich mit <em>[MySQL]</em> auf <strong><em>[localhost]</em></strong>, Port 3306, mit dem Benutzer <strong><em>[root]</em></strong> <strong>ohne Passwort</strong> (die Standardeinstellungen von <em>[Laragon]</em>). Wenn Ihr Konto <strong><em>[root]</em></strong> ein Passwort hat, tragen Sie es in der Datei <strong><em>[src/main/resources/application.properties]</em></strong> der Anwendung in der Zeile <strong><em>[spring.datasource.password=]</em></strong> ein (zum Beispiel <strong><em>[spring.datasource.password=myPassword]</em></strong>). Um zu vermeiden, dass ein Passwort in eine Projektdatei geschrieben wird, können Sie es auch in der Umgebungsvariablen <strong><em>[SPRING_DATASOURCE_PASSWORD]</em></strong> angeben, die Vorrang vor der Datei hat: <strong><em>[set SPRING_DATASOURCE_PASSWORD=myPassword]</em></strong> unter <em>[Windows]</em> (Eingabeaufforderung), <strong><em>[export SPRING_DATASOURCE_PASSWORD=myPassword]</em></strong> unter <em>[Linux]</em> und <em>[macOS]</em>;</li>
+<li><strong>öffnen Sie den Ordner</strong> <strong><em>[rdvmedecins2-spring-mvc]</em></strong> in <em>[Visual Studio Code]</em> (Menü Datei / Ordner öffnen) und öffnen Sie dann ein Terminal (Menü Terminal / Neues Terminal);</li>
+<li><strong>starten Sie die Anwendung</strong> unter <em>[Linux]</em> und <em>[macOS]</em>:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>./mvnw spring-boot:run
+</code></pre></div></td></tr></table></div>
+<p>und unter <em>[Windows]</em>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>mvnw spring-boot:run
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Beim ersten Start lädt der Maven Wrapper <em>[Maven]</em> herunter, danach lädt <em>[Maven]</em> die Bibliotheken der Anwendung herunter, was einige Minuten dauert. Anschließend wird die Anwendung kompiliert und gestartet. Die Konsole zeigt das <em>[Spring Boot]</em>-Banner, gefolgt von den Startmeldungen (hier sind nur die wichtigsten wiedergegeben):</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>  .   ____          _            __ _ _
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a> /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>  '  |____| .__|_| |_|_| |_\__, | / / / /
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a> =========|_|==============|___/=/_/_/_/
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a> :: Spring Boot ::                (v4.1.1)
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>... INFO ... rdvmedecins.RdvMedecinsApplication : Starting RdvMedecinsApplication using Java 21.0.10 ...
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>... INFO ... rdvmedecins.RdvMedecinsApplication : The following 1 profile is active: "dev"
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>... INFO ... o.s.boot.tomcat.TomcatWebServer    : Tomcat initialized with port 8081 (http)
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>... INFO ... org.hibernate.orm.core              : HHH000001: Hibernate ORM core version 7.4.5.Final
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>... INFO ... com.zaxxer.hikari.HikariDataSource : HikariPool-1 - Start completed.
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>Hibernate: select d1_0.id,d1_0.first_name,d1_0.last_name,d1_0.title,u1_0.id,... from doctors d1_0 ...
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>Hibernate: select c1_0.id,c1_0.first_name,c1_0.last_name,c1_0.title,u1_0.id,... from clients c1_0 ...
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>... INFO ... o.s.boot.tomcat.TomcatWebServer    : Tomcat started on port 8081 (http) with context path '/'
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>... INFO ... rdvmedecins.RdvMedecinsApplication : Started RdvMedecinsApplication in 5.307 seconds (process running for 5.807)
+</code></pre></div></td></tr></table></div>
+<p>Jede Zeile beginnt mit Datum und Uhrzeit (hier ersetzt durch <strong><em>[...]</em></strong>), gefolgt von der Meldungsstufe (<strong><em>[INFO]</em></strong>, <strong><em>[WARN]</em></strong>, <strong><em>[ERROR]</em></strong>), der Prozessnummer und dem Thread-Namen (ebenfalls ersetzt durch <strong><em>[...]</em></strong>) und schließlich dem abgekürzten Namen der Klasse, die die Meldung schreibt. Sie zeigt, dass die Anwendung im Profil <strong><em>[dev]</em></strong> läuft (eine Gruppe von Entwicklungseinstellungen, die unter anderem SQL-Anfragen anzeigt), dass der Server <em>[Tomcat]</em> auf Port 8081 lauscht, dass die Verbindung zur Datenbank erfolgreich hergestellt wurde (der Verbindungs-„Pool“ <em>[HikariCP]</em> ist bereit) und dass die Anwendung bereits die Liste der Ärzte und Klienten gelesen hat (die beiden SQL-Anfragen). Zusammen mit <em>[MariaDB]</em> gibt <em>[Hibernate]</em> außerdem eine Warnung <strong><em>[HHH000511]</em></strong> aus, die ohne Folgen bleibt;</p>
+<ul>
+<li><strong>Öffnen Sie die URL</strong> <strong><em>[http://localhost:8081]</em></strong> in einem Browser:</li>
+</ul>
+<p><img src="images/10000000000003EA000003B4542226F4.png" width="605" height="572" style="width:16cm;height:15.138cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000003EA000003B4542226F4.png" /></p>
+<ul>
+<li>Melden Sie sich mit einem der Demo-Konten an, deren Passwort dem Benutzernamen entspricht: <strong><em>[admin]</em></strong> (Administrator), <strong><em>[pelissier]</em></strong>, <strong><em>[tatou]</em></strong>, <strong><em>[dupont]</em></strong> (Ärzte), <strong><em>[martin]</em></strong>, <strong><em>[durand]</em></strong>, <strong><em>[bistrou]</em></strong>, <strong><em>[german]</em></strong> (Patienten). Außerdem müssen Sie die Zeichen aus dem Bild eingeben, in Groß- oder Kleinschreibung.</li>
+</ul>
+<p>Beim Start der Anwendung wird die Datenbank gelesen: Ist <em>[MySQL]</em> nicht erreichbar, bricht sie sofort ab, und die Konsole zeigt den Grund an. Lautet die Meldung <strong><em>[Communications link failure]</em></strong> (oder <strong><em>[Connection refused]</em></strong>), ist <em>[MySQL]</em> nicht gestartet; bei <strong><em>[Access denied for user &#x27;root&#x27;@&#x27;localhost&#x27;]</em></strong> ist das Passwort falsch; bei <strong><em>[Unknown database &#x27;dbrdvmedecins2&#x27;]</em></strong> wurde das SQL-Skript nicht ausgeführt; bei <strong><em>[Port 8081 was already in use]</em></strong> wird Port 8081 bereits verwendet (zum Beispiel von der <em>[ASP.NET Core]</em> -Version der Anwendung); bei <strong><em>[release version 21 not supported]</em></strong> (oder <strong><em>[invalid target release: 21]</em></strong>) ist das installierte <em>[JDK]</em> älter als Version 21. Die Datei <strong><em>[README.md]</em></strong> der Anwendung beschreibt weitere Fälle. Beenden Sie die Anwendung mit <strong><em>[Ctrl-C]</em></strong> im Terminal.</p>
+<p>Das letzte Kapitel des Dokuments erklärt, wie die Anwendung benutzt wird, und behandelt dann jede ihrer Dateien.</p>
+<h2 id="14-beispiele">1.4. <span style="color: #2e74b5">Beispiele</span></h2>
+<p>Die Beispiele liegen im Ordner <strong><em>[examples]</em></strong>, mit einem Unterordner pro Beispiel:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>examples/
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>├── .mvn/
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>│   └── wrapper/
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>│       └── maven-wrapper.properties
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>├── 01-structure/
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>├── 02-routing/
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>├── ...
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>├── 28-layers/
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>├── common/
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>│   └── bootstrap/
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>├── mvnw
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>├── mvnw.cmd
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>└── pom.xml
+</code></pre></div></td></tr></table></div>
+<p>Jedes Beispiel ist ein <em>[Maven]</em> <strong>-Projekt,</strong> das für sich kompiliert und ausgeführt werden kann. Ein <em>[Maven]</em>-Projekt wird durch eine Datei <strong><em>[pom.xml]</em></strong> (<em>[Project Object Model]</em>) beschrieben: seine Identität, die Bibliotheken, von denen es abhängt (seine <strong>Abhängigkeiten</strong>), und wie es erstellt wird. Die 28 Projekte sind <strong>Module</strong> eines übergeordneten Projekts, das in der Datei <strong><em>[examples/pom.xml]</em></strong> beschrieben ist. Die Skripte <strong><em>[mvnw]</em></strong> (<em>[Linux]</em>, <em>[macOS]</em>) und <strong><em>[mvnw.cmd]</em></strong> (<em>[Windows]</em>) bilden den Maven Wrapper; die Datei <strong><em>[.mvn/wrapper/maven-wrapper.properties]</em></strong> legt fest, welche Version von <em>[Maven]</em> er herunterladen muss (3.9.11).</p>
+<p>Der Ordner <strong><em>[common/bootstrap]</em></strong> enthält das CSS-Framework <em>[Bootstrap]</em>, das von den Beispielen gemeinsam genutzt wird, die ihre Seiten formatieren (ab Beispiel 15).</p>
+<p>Jedes Beispiel hat die übliche Struktur eines <em>[Maven]</em>-Projekts:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>13-first-view/
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>├── src/
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>│   └── main/
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>│       ├── java/
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>│       │   └── example13/
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>│       │       ├── controllers/
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>│       │       │   └── ViewsController.java
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a>│       │       ├── models/
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a>│       │       │   └── PageModel.java
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>│       │       └── Example13Application.java
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a>│       └── resources/
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>│           ├── templates/
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>│           │   └── views/
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a>│           │       ├── index.html
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a>│           │       └── unknown.html
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>│           └── application.properties
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a>└── pom.xml
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong><em>[src/main/java]</em></strong>: der <em>[Java]</em>-Code, gegliedert in <strong>Pakete</strong> (die Ordner <strong><em>[example13]</em></strong>, <strong><em>[example13/controllers]</em></strong> ...). Ein Paket in <em>[Java]</em> entspricht einem Namespace in <em>[C#]</em>; der Name eines Pakets spiegelt den Pfad seines Ordners wider (<strong><em>[example13.controllers]</em></strong>);</li>
+<li><strong><em>[Example13Application.java]</em></strong>: die Startklasse der Anwendung, die die Methode <strong><em>[main]</em></strong> enthält (siehe Beispiel 01);</li>
+<li><strong><em>[controllers]</em></strong>: die Controller;</li>
+<li><strong><em>[models]</em></strong>: die Klassen, die die Modelle beschreiben (der Actions und der Views);</li>
+<li><strong><em>[src/main/resources]</em></strong>: Dateien, die nicht zum <em>[Java]</em>-Code gehören;</li>
+<li><strong><em>[templates]</em></strong>: die <em>[Thymeleaf]</em> -Views (ab Kapitel 4);</li>
+<li><strong><em>[application.properties]</em></strong>: die Konfiguration der Anwendung (Listening-Port und später Datenbankverbindung usw.);</li>
+<li><strong><em>[pom.xml]</em></strong>: die Projektdatei, die beschreibt, wie die Anwendung erstellt wird.</li>
+</ul>
+<p>Bei der Kompilierung erstellt <em>[Maven]</em> in jedem Beispiel einen Ordner namens <strong><em>[target]</em></strong>, in dem es die kompilierten Klassen ablegt; dieser Ordner kann bedenkenlos gelöscht werden.</p>
+<p>Um ein Beispiel auszuführen, öffnen Sie ein Terminal im Beispielordner (in <em>[Visual Studio Code]</em>: Rechtsklick auf den Beispielordner, dann „Im integrierten Terminal öffnen“ wählen) und geben Sie unter <em>[Linux]</em> und <em>[macOS]</em>Folgendes ein:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>../mvnw spring-boot:run
+</code></pre></div></td></tr></table></div>
+<p>und unter <em>[Windows]</em>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>..\mvnw spring-boot:run
+</code></pre></div></td></tr></table></div>
+<p>Der Maven Wrapper befindet sich im Ordner <strong><em>[examples]</em></strong>, dem übergeordneten Ordner des Beispielordners: daher <strong><em>[../]</em></strong> (oder <strong><em>[..\]</em></strong>). Der Befehl <strong><em>[spring-boot:run]</em></strong> kompiliert das Beispiel (in seinem Ordner <strong><em>[target]</em></strong>) und startet dann die Anwendung. Alle Beispiele lauschen auf Port 5000: Es kann also nur eines gleichzeitig laufen. Beenden Sie den Server mit <strong><em>[Ctrl-C]</em></strong> im Terminal. Sie können auch alle Beispiele auf einmal aus dem Ordner <strong><em>[examples]</em></strong> kompilieren, um zu prüfen, ob die Installation vollständig ist:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>./mvnw compile
+</code></pre></div></td></tr></table></div>
+<p>(<strong><em>[mvnw compile]</em></strong> unter <em>[Windows]</em>).</p>
+<p>Wenn Sie den Ordner <strong><em>[examples]</em></strong> in <em>[Visual Studio Code]</em> öffnen, findet die Erweiterung <em>[Extension Pack for Java]</em> die übergeordnete Datei <strong><em>[pom.xml]</em></strong>  und importiert alle Module (sie erscheinen im Bereich „Java Projects“): Sie haben dann Syntaxhervorhebung, Code-Vervollständigung und Fehlermeldungen in jeder Datei. Mit ihren Standardeinstellungen kompiliert sie außerdem jede <strong><em>[.java]</em></strong>-Datei, sobald Sie sie speichern. Die Erweiterung <em>[Spring Boot Extension Pack]</em> fügt einen Bereich „Spring Boot Dashboard“ hinzu, der die gefundenen Anwendungen auflistet und es erlaubt, sie ohne Terminal zu starten oder zu beenden (das genaue Aussehen dieser Bereiche hängt von der Version der Erweiterungen ab). Schließlich hängen alle Beispiele von <em>[Spring Boot DevTools]</em> ab (siehe unten): Eine laufende Anwendung startet automatisch neu – innerhalb von ein bis zwei Sekunden –, sobald eine ihrer Klassen neu kompiliert wird. Mit <em>[Visual Studio Code]</em> genügt es also im Prinzip, eine geänderte Datei zu speichern, damit die Anwendung sie berücksichtigt.</p>
+<p>Die Datei <strong><em>[pom.xml]</em></strong> des übergeordneten Projekts <strong><em>[examples/pom.xml]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span>
+<span class="normal"><a href="#__codelineno-10-30">30</a></span>
+<span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span>
+<span class="normal"><a href="#__codelineno-10-40">40</a></span>
+<span class="normal"><a href="#__codelineno-10-41">41</a></span>
+<span class="normal"><a href="#__codelineno-10-42">42</a></span>
+<span class="normal"><a href="#__codelineno-10-43">43</a></span>
+<span class="normal"><a href="#__codelineno-10-44">44</a></span>
+<span class="normal"><a href="#__codelineno-10-45">45</a></span>
+<span class="normal"><a href="#__codelineno-10-46">46</a></span>
+<span class="normal"><a href="#__codelineno-10-47">47</a></span>
+<span class="normal"><a href="#__codelineno-10-48">48</a></span>
+<span class="normal"><a href="#__codelineno-10-49">49</a></span>
+<span class="normal"><a href="#__codelineno-10-50">50</a></span>
+<span class="normal"><a href="#__codelineno-10-51">51</a></span>
+<span class="normal"><a href="#__codelineno-10-52">52</a></span>
+<span class="normal"><a href="#__codelineno-10-53">53</a></span>
+<span class="normal"><a href="#__codelineno-10-54">54</a></span>
+<span class="normal"><a href="#__codelineno-10-55">55</a></span>
+<span class="normal"><a href="#__codelineno-10-56">56</a></span>
+<span class="normal"><a href="#__codelineno-10-57">57</a></span>
+<span class="normal"><a href="#__codelineno-10-58">58</a></span>
+<span class="normal"><a href="#__codelineno-10-59">59</a></span>
+<span class="normal"><a href="#__codelineno-10-60">60</a></span>
+<span class="normal"><a href="#__codelineno-10-61">61</a></span>
+<span class="normal"><a href="#__codelineno-10-62">62</a></span>
+<span class="normal"><a href="#__codelineno-10-63">63</a></span>
+<span class="normal"><a href="#__codelineno-10-64">64</a></span>
+<span class="normal"><a href="#__codelineno-10-65">65</a></span>
+<span class="normal"><a href="#__codelineno-10-66">66</a></span>
+<span class="normal"><a href="#__codelineno-10-67">67</a></span>
+<span class="normal"><a href="#__codelineno-10-68">68</a></span>
+<span class="normal"><a href="#__codelineno-10-69">69</a></span>
+<span class="normal"><a href="#__codelineno-10-70">70</a></span>
+<span class="normal"><a href="#__codelineno-10-71">71</a></span>
+<span class="normal"><a href="#__codelineno-10-72">72</a></span>
+<span class="normal"><a href="#__codelineno-10-73">73</a></span>
+<span class="normal"><a href="#__codelineno-10-74">74</a></span>
+<span class="normal"><a href="#__codelineno-10-75">75</a></span>
+<span class="normal"><a href="#__codelineno-10-76">76</a></span>
+<span class="normal"><a href="#__codelineno-10-77">77</a></span>
+<span class="normal"><a href="#__codelineno-10-78">78</a></span>
+<span class="normal"><a href="#__codelineno-10-79">79</a></span>
+<span class="normal"><a href="#__codelineno-10-80">80</a></span>
+<span class="normal"><a href="#__codelineno-10-81">81</a></span>
+<span class="normal"><a href="#__codelineno-10-82">82</a></span>
+<span class="normal"><a href="#__codelineno-10-83">83</a></span>
+<span class="normal"><a href="#__codelineno-10-84">84</a></span>
+<span class="normal"><a href="#__codelineno-10-85">85</a></span>
+<span class="normal"><a href="#__codelineno-10-86">86</a></span>
+<span class="normal"><a href="#__codelineno-10-87">87</a></span>
+<span class="normal"><a href="#__codelineno-10-88">88</a></span>
+<span class="normal"><a href="#__codelineno-10-89">89</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="cm">&lt;!--</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="cm">  pom.xml des Ordners [examples]: das ELTERNPROJEKT aller Beispiele.</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="cm">  Jedes Beispiel ist ein Maven-Modul: Seine eigene pom.xml bezeichnet diese Datei</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="cm">  als Parent und erbt daher alles, was hier steht. Die gemeinsamen</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="cm">  Einstellungen der Beispiele werden so nur einmal geschrieben.</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="cm">--&gt;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="nt">&lt;project</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">  </span><span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">  </span><span class="cm">&lt;!-- der Spring-Boot-Parent: Versionen aller Bibliotheken, Compiler-Einstellungen --&gt;</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">  </span><span class="nt">&lt;parent&gt;</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>4.1.1<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="w">    </span><span class="nt">&lt;relativePath/&gt;</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">  </span><span class="nt">&lt;/parent&gt;</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">  </span><span class="cm">&lt;!-- die Identität dieses Projekts --&gt;</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">  </span><span class="nt">&lt;groupId&gt;</span>course.springmvc<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>examples<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="w">  </span><span class="nt">&lt;version&gt;</span>1.0<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="w">  </span><span class="cm">&lt;!-- pom: dieses Projekt erzeugt selbst nichts, es fasst Module zusammen --&gt;</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="w">  </span><span class="nt">&lt;packaging&gt;</span>pom<span class="nt">&lt;/packaging&gt;</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a><span class="w">  </span><span class="nt">&lt;properties&gt;</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a><span class="w">    </span><span class="cm">&lt;!-- Java 21, LTS-Version (Long-Term Support) --&gt;</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30"></a><span class="w">    </span><span class="nt">&lt;java.version&gt;</span>21<span class="nt">&lt;/java.version&gt;</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31"></a><span class="w">  </span><span class="nt">&lt;/properties&gt;</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a><span class="w">  </span><span class="cm">&lt;!-- die Module: eines pro Beispiel --&gt;</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a><span class="w">  </span><span class="nt">&lt;modules&gt;</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>01-structure<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>02-routing<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>03-responses<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>04-redirects<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>05-request-response<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>06-services<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>07-parameters<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>08-model-class<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>09-action-validation<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>10-arrays<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>11-post<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>12-custom-binding<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>13-first-view<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>14-thymeleaf<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-49" name="__codelineno-10-49"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>15-layout<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>16-helpers<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>17-get-form<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>18-fields<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>19-form-validation<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-54" name="__codelineno-10-54"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>20-prg<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-55" name="__codelineno-10-55"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>21-links-buttons<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-56" name="__codelineno-10-56"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>22-i18n<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-57" name="__codelineno-10-57"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>23-scopes<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-58" name="__codelineno-10-58"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>24-lifecycle<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-59" name="__codelineno-10-59"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>25-jwt<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-60" name="__codelineno-10-60"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>26-roles<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-61" name="__codelineno-10-61"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>27-captcha<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-62" name="__codelineno-10-62"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>28-layers<span class="nt">&lt;/module&gt;</span>
+<a id="__codelineno-10-63" name="__codelineno-10-63"></a><span class="w">  </span><span class="nt">&lt;/modules&gt;</span>
+<a id="__codelineno-10-64" name="__codelineno-10-64"></a>
+<a id="__codelineno-10-65" name="__codelineno-10-65"></a><span class="w">  </span><span class="cm">&lt;!-- die Abhängigkeiten, die ALLE Beispiele gemeinsam haben --&gt;</span>
+<a id="__codelineno-10-66" name="__codelineno-10-66"></a><span class="w">  </span><span class="nt">&lt;dependencies&gt;</span>
+<a id="__codelineno-10-67" name="__codelineno-10-67"></a><span class="w">    </span><span class="cm">&lt;!-- Spring MVC und der Tomcat-Webserver, in die Anwendung eingebettet --&gt;</span>
+<a id="__codelineno-10-68" name="__codelineno-10-68"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-10-69" name="__codelineno-10-69"></a><span class="w">      </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-10-70" name="__codelineno-10-70"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-10-71" name="__codelineno-10-71"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-10-72" name="__codelineno-10-72"></a><span class="w">    </span><span class="cm">&lt;!-- die Entwicklungswerkzeuge: automatischer Neustart nach einer Änderung --&gt;</span>
+<a id="__codelineno-10-73" name="__codelineno-10-73"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-10-74" name="__codelineno-10-74"></a><span class="w">      </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-10-75" name="__codelineno-10-75"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-devtools<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-10-76" name="__codelineno-10-76"></a><span class="w">      </span><span class="nt">&lt;optional&gt;</span>true<span class="nt">&lt;/optional&gt;</span>
+<a id="__codelineno-10-77" name="__codelineno-10-77"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-10-78" name="__codelineno-10-78"></a><span class="w">  </span><span class="nt">&lt;/dependencies&gt;</span>
+<a id="__codelineno-10-79" name="__codelineno-10-79"></a>
+<a id="__codelineno-10-80" name="__codelineno-10-80"></a><span class="w">  </span><span class="nt">&lt;build&gt;</span>
+<a id="__codelineno-10-81" name="__codelineno-10-81"></a><span class="w">    </span><span class="nt">&lt;plugins&gt;</span>
+<a id="__codelineno-10-82" name="__codelineno-10-82"></a><span class="w">      </span><span class="cm">&lt;!-- das Spring-Boot-Plugin: mvnw spring-boot:run startet die Anwendung --&gt;</span>
+<a id="__codelineno-10-83" name="__codelineno-10-83"></a><span class="w">      </span><span class="nt">&lt;plugin&gt;</span>
+<a id="__codelineno-10-84" name="__codelineno-10-84"></a><span class="w">        </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-10-85" name="__codelineno-10-85"></a><span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-10-86" name="__codelineno-10-86"></a><span class="w">      </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-10-87" name="__codelineno-10-87"></a><span class="w">    </span><span class="nt">&lt;/plugins&gt;</span>
+<a id="__codelineno-10-88" name="__codelineno-10-88"></a><span class="w">  </span><span class="nt">&lt;/build&gt;</span>
+<a id="__codelineno-10-89" name="__codelineno-10-89"></a><span class="nt">&lt;/project&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diese Datei:</p>
+<ul>
+<li>Zeilen 14–19: Das übergeordnete Projekt erbt selbst von einem Elternprojekt, <strong><em>[spring-boot-starter-parent]</em></strong>, Version 4.1.1. Dieses Projekt legt die Versionen aller Bibliotheken von <em>[Spring]</em> und der von ihnen verwendeten Bibliotheken fest, die so gewählt sind, dass sie zusammenarbeiten: Deshalb gibt später keine Abhängigkeit eine Version an. Es steuert außerdem die Kompilierung (UTF-8-Kodierung des Quellcodes, Version von <em>[Java]</em> ...). Das leere Element <strong><em>[&lt;relativePath/&gt;]</em></strong> zeigt an, dass dieses Elternprojekt kein benachbarter Ordner ist, sondern in den <em>[Maven]</em>-Repositories gesucht werden muss;</li>
+<li>Zeilen 22–24: die Identität des Projekts: eine Gruppe (<strong><em>[groupId]</em></strong>), ein Name (<strong><em>[artifactId]</em></strong>) und eine Version. Die Module verwenden diese Identität, um auf ihr Elternprojekt zu verweisen;</li>
+<li>Zeile 26: Ein Projekt vom Typ <strong><em>[pom]</em></strong> erzeugt weder Klassen noch Archive; es fasst Module zusammen und gibt seine Einstellungen an sie weiter;</li>
+<li>Zeilen 28–31: die Zielversion von <em>[Java]</em>: <em>[Java]</em> 21;</li>
+<li>Zeilen 34–63: die Module, eines nach dem anderen; angegeben ist jeweils der Name ihres Ordners. Ein <em>[Maven]</em>-Befehl, der im Ordner <strong><em>[examples]</em></strong> ausgeführt wird, gilt für alle Module;</li>
+<li>Zeilen 66–78: Abhängigkeiten, die allen Beispielen gemeinsam sind und von jedem Modul geerbt werden;</li>
+<li>Zeilen 68–71: Der Starter <strong><em>[spring-boot-starter-webmvc]</em></strong> liefert <em>[Spring MVC]</em>, den in die Anwendung eingebetteten Webserver <em>[Tomcat]</em> (es muss kein Server installiert werden) und die Bibliothek <em>[Jackson]</em>, die <em>[Java]</em>-Objekte in JSON umwandelt;</li>
+<li>Zeilen 73–77: <em>[Spring Boot DevTools]</em>, Entwicklungswerkzeuge: automatischer Neustart der Anwendung, wenn eine Klasse neu kompiliert wird, Deaktivierung von Caches (etwa des View-Caches) und detailliertere Fehlermeldungen. Sie dienen ausschließlich der Entwicklung: Das <em>[Spring Boot]</em>-Plugin (Zeilen 80–88) nimmt sie nicht in das ausführbare Archiv (<strong><em>[.jar]</em></strong>) für den Produktivbetrieb auf, und sie werden automatisch deaktiviert, wenn die Anwendung mit <strong><em>[java -jar]</em></strong> gestartet wird;</li>
+<li>Zeilen 80–88: das <em>[Maven]</em>-Plugin für <em>[Spring Boot]</em>. Dieses Plugin stellt den Befehl <strong><em>[spring-boot:run]</em></strong> sowie die Erstellung eines ausführbaren Archivs (<strong><em>[mvnw package]</em></strong>) bereit.</li>
+</ul>
+<p>Die Datei <strong><em>[pom.xml]</em></strong> eines Beispiels ist sehr kurz. Zum Beispiel <strong><em>[01-structure/pom.xml]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nt">&lt;project</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">         </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">         </span><span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">  </span><span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">  </span><span class="nt">&lt;parent&gt;</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>course.springmvc<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>examples<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.0<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">  </span><span class="nt">&lt;/parent&gt;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>example01<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="nt">&lt;/project&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 6–10: das Elternprojekt – das Projekt <strong><em>[examples]</em></strong>, identifiziert durch seine ID. Das Modul erbt dessen Abhängigkeiten und Einstellungen und über dieses auch die von <strong><em>[spring-boot-starter-parent]</em></strong>;</li>
+<li>Zeile 11: der Name des Moduls. Gruppe und Version stammen vom Elternprojekt.</li>
+</ul>
+<p>Ein Beispiel, das eine zusätzliche Bibliothek benötigt, deklariert sie in seiner eigenen Datei <strong><em>[pom.xml]</em></strong>. Zum Beispiel <strong><em>[13-first-view/pom.xml]</em></strong>, das die View-Engine <em>[Thymeleaf]</em> verwendet:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span>
+<span class="normal"><a href="#__codelineno-12-6">6</a></span>
+<span class="normal"><a href="#__codelineno-12-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="w">  </span><span class="nt">&lt;dependencies&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">    </span><span class="cm">&lt;!-- die Thymeleaf-Views --&gt;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">      </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-thymeleaf<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="w">  </span><span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 3–6: Eine Abhängigkeit wird durch ihre Gruppe und ihren Namen identifiziert; ihre Version wird von <strong><em>[spring-boot-starter-parent]</em></strong> festgelegt.</li>
+</ul>
+<p>Die Datei <strong><em>[src/main/resources/application.properties]</em></strong> beginnt in allen Beispielen gleich:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># der Listening-Port des Servers (standardmäßig 8080)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="na">server.port</span><span class="o">=</span><span class="s">5000</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="c1"># die Fehlerantworten von Spring Boot enthalten den Call Stack nicht</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="na">spring.web.error.include-stacktrace</span><span class="o">=</span><span class="s">never</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 2: der Listening-Port des Servers. Ohne diese Zeile würde <em>[Spring Boot]</em> auf Port 8080 lauschen; wir haben Port 5000 gewählt, den auch der Kurs <em>[ASP.NET Core MVC]</em> verwendet;</li>
+<li>Zeile 4: Wenn eine Anfrage fehlschlägt, gibt <em>[Spring Boot]</em> eine Fehlerantwort zurück (dazu mehr im nächsten Kapitel). Diese Einstellung stellt sicher, dass die Antwort nie den <strong>Aufrufstack</strong>  enthält (die Liste der Methoden, die zum Zeitpunkt des Fehlers ausgeführt werden), der einem Angreifer Informationen über den Code der Anwendung verraten würde.</li>
+</ul>
+<p>Jede Zeile hat die Form <strong><em>[key=value]</em></strong>; Zeilen, die mit <strong><em>[#]</em></strong> beginnen, sind Kommentare. Einige Beispiele fügen nach diesen beiden Zeilen eigene Schlüssel hinzu.</p>
+<p>Schließlich finden Beispiele, die <em>[Bootstrap]</em> verwenden, es im Ordner <strong><em>[common/bootstrap]</em></strong> und nicht in ihrem eigenen Ordner: So existiert nur eine Kopie der Dateien. Jedes dieser Beispiele hat eine Konfigurationsklasse, die diesen Ordner unter der URL <strong><em>[/bootstrap/...]</em></strong> bereitstellt. Zum Beispiel <strong><em>[15-layout/src/main/java/example15/config/WebConfig.java]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span>
+<span class="normal"><a href="#__codelineno-14-17">17</a></span>
+<span class="normal"><a href="#__codelineno-14-18">18</a></span>
+<span class="normal"><a href="#__codelineno-14-19">19</a></span>
+<span class="normal"><a href="#__codelineno-14-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">example15.config</span><span class="p">;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry</span><span class="p">;</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.servlet.config.annotation.WebMvcConfigurer</span><span class="p">;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="c1">// die Konfiguration von Spring MVC, ergänzt</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="nd">@Configuration</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebMvcConfigurer</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">    </span><span class="c1">// Bootstrap, von den Beispielen gemeinsam genutzt: der Ordner examples/common/bootstrap</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="w">    </span><span class="c1">// wird unter der URL /bootstrap/... bereitgestellt</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">    </span><span class="nd">@Override</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addResourceHandlers</span><span class="p">(</span><span class="n">ResourceHandlerRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addResourceHandler</span><span class="p">(</span><span class="s">"/bootstrap/**"</span><span class="p">)</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="w">                </span><span class="c1">// "file:": ein Ordner auf der Festplatte, relativ zum aktuellen Ordner. Zwei</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="w">                </span><span class="c1">// Versuche: Start aus dem Ordner des Beispiels oder aus [examples]</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="w">                </span><span class="p">.</span><span class="na">addResourceLocations</span><span class="p">(</span><span class="s">"file:../common/bootstrap/"</span><span class="p">,</span><span class="w"> </span><span class="s">"file:common/bootstrap/"</span><span class="p">);</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 8–9: eine Konfigurationsklasse für <em>[Spring MVC]</em>  (die Beispiele 06 und 12 erklären diesen Mechanismus);</li>
+<li>Zeilen 14–18: Die Dateien, deren URL mit <strong><em>[/bootstrap/]</em></strong> beginnt, werden aus dem Ordner <strong><em>[../common/bootstrap/]</em></strong> ausgeliefert, relativ zum aktuellen Ordner – das heißt dem Ordner des Beispiels, wenn es wie oben beschrieben gestartet wird. Eine Seite kann so das Stylesheet <strong><em>[/bootstrap/css/bootstrap.min.css]</em></strong> verwenden. Der zweite Ordner, <strong><em>[common/bootstrap/]</em></strong>, wird verwendet, wenn die Anwendung aus dem Ordner <strong><em>[examples]</em></strong> statt aus dem Beispielordner gestartet wird.</li>
+</ul>
+<h2 id="15-inhalt-des-dokuments">1.5. <span style="color: #2e74b5">Inhalt des Dokuments</span></h2>
+<p>Das Dokument ist wie folgt aufgebaut:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Kapitel</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Inhalt</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Beispiele</b></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Controller, Actions und</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Vom Browser zur Action: Routen, Antworten, Weiterleitungen, Services und Dependency Injection</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">01–06</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Das Action-Modell</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Anfrageparameter: Binding, Konvertierung, Validierung, POST-Formulare</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">07 bis 12</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Die View und ihr Template</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Thymeleaf, Template, Fragmente, Formulare, Validierung, PRG</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">13 bis 21</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Internationalisierung</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Eine Anwendung in Französisch und Englisch</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">22</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Daten-Scopes</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Application, Request, Session, Client</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">23</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Der Lebenszyklus einer Anfrage</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Servlet-Filter, Interceptors, <i><b>[@ControllerAdvice]</b></i>, Template-Binding, Fehlerseite</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">24</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Authentifizierung und Autorisierung</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Spring Security, JWT in einem Cookie, Rollen, CAPTCHA, Begrenzung der Versuche</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">25–27</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Geschichtete Architektur</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Web / Geschäftslogik / DAO mit Spring Data JPA und MySQL</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">28</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Fallstudie</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Die Anwendung RdvMedecins, Datei für Datei erklärt</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">-</div></td></tr></table>
+
+<p>Jedes Beispiel führt nur wenige neue Konzepte ein, und die Kapitel bauen aufeinander auf: Am besten lesen Sie sie der Reihe nach. Die Fallstudie hingegen greift auf <strong>alle</strong> Konzepte der vorangegangenen Kapitel zurück: Wo es sinnvoll ist, verweist ihr Kommentar auf das Beispiel, in dem das Konzept eingeführt wurde. Die Anhänge beschreiben die Installation der Werkzeuge: <em>[JDK]</em> 21, <em>[Visual Studio Code]</em> und seiner Erweiterungen, des Maven Wrappers, von <em>[MySQL]</em> mit <em>[Laragon]</em> und von <em>[curl]</em>.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>
